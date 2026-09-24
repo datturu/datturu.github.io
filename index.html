@@ -294,6 +294,39 @@
     .r-stats span { font-size: 12px; line-height: 1.35; display: block; }
   }
 </style>
+<style id="nav-upgrade">
+/* Floating glass pill nav */
+nav{padding-top:14px;border-bottom:0!important;background:transparent!important;backdrop-filter:none!important}
+.nav-inner{height:60px;padding:0 10px 0 14px;border-radius:999px;border:1px solid transparent;transition:background .3s,border-color .3s,box-shadow .3s;max-width:1120px}
+nav.scrolled .nav-inner{background:rgba(12,16,25,.72);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);border-color:var(--border);box-shadow:0 10px 40px -12px rgba(0,0,0,.6)}
+
+/* Logo with gradient "DA" monogram */
+.logo{display:inline-flex;align-items:center;gap:0;font-size:17px;color:var(--text)}
+.logo::before{content:"DA";margin-right:10px;display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:var(--grad);color:#07090f;font-size:13px;font-weight:800;letter-spacing:-.02em;box-shadow:0 0 0 1px rgba(255,255,255,.12) inset,0 6px 20px -6px rgba(34,211,238,.55)}
+
+/* Links grouped in a pill, with active-section highlight */
+.nav-links{gap:2px!important;padding:4px;border-radius:999px;background:rgba(255,255,255,.03);border:1px solid var(--border)}
+.nav-links a{position:relative;padding:8px 14px;border-radius:999px;font-weight:500;transition:color .2s,background .2s}
+.nav-links a:hover{background:rgba(255,255,255,.05)}
+.nav-links a.active{color:var(--text);background:rgba(255,255,255,.08)}
+.nav-links a.active::after{content:"";position:absolute;left:50%;bottom:3px;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--cyan)}
+
+/* Gradient CTA */
+.nav-links a.nav-cta{margin-left:6px;padding:8px 16px;border:0;background:var(--grad);color:#07090f!important;font-weight:600;box-shadow:0 6px 20px -8px rgba(167,139,250,.7)}
+.nav-links a.nav-cta::after{content:" →";position:static;width:auto;height:auto;margin:0;background:none;transition:margin .2s}
+.nav-links a.nav-cta:hover{filter:brightness(1.08)}
+.nav-links a.nav-cta:hover::after{margin-left:3px}
+
+/* Mobile */
+@media (max-width:680px){
+  nav{padding:10px 12px 0}
+  .nav-inner{padding:0 6px 0 12px;background:rgba(12,16,25,.8);backdrop-filter:blur(16px);border-color:var(--border)}
+  .nav-links{top:74px!important;left:12px!important;right:12px!important;border-radius:18px;padding:0;background:rgba(12,16,25,.97)!important;border:1px solid transparent}
+  .nav-links.open{border-color:var(--border);padding:6px}
+  .nav-links a{border-radius:12px;border-top:0!important}
+  .nav-links a.nav-cta{margin:6px 0 0;text-align:center}
+}
+</style>
 </head>
 <body>
 <div class="bg" aria-hidden="true"></div>
@@ -669,6 +702,20 @@
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
   document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+<script>
+/* Highlights the nav link for the section currently on screen */
+(function(){
+  var links=[].slice.call(document.querySelectorAll('.nav-links a:not(.nav-cta)'));
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id)});
+      }
+    });
+  },{rootMargin:'-45% 0px -50% 0px'});
+  document.querySelectorAll('section[id]').forEach(function(s){io.observe(s)});
+})();
 </script>
 </body>
 </html>
