@@ -383,6 +383,26 @@ nav.scrolled .nav-inner{background:rgba(12,16,25,.72);backdrop-filter:blur(16px)
   .sk-name{font-size:12px}
 }
 </style>
+<style id="contact-form">
+.cf-or{display:flex;align-items:center;gap:14px;max-width:640px;margin:44px auto 26px;color:var(--dim);font-family:var(--mono);font-size:12.5px;position:relative}
+.cf-or::before,.cf-or::after{content:"";flex:1;height:1px;background:var(--border)}
+.cf{position:relative;max-width:640px;margin:0 auto;text-align:left;display:grid;gap:16px}
+.cf-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.cf-field{display:grid;gap:7px}
+.cf-field span{font-size:13px;font-weight:500;color:var(--muted)}
+.cf-field input,.cf-field textarea{width:100%;font:inherit;font-size:15px;color:var(--text);background:rgba(7,9,15,.55);border:1px solid var(--border-strong);border-radius:12px;padding:12px 14px;transition:border-color .2s,box-shadow .2s,background .2s;resize:vertical}
+.cf-field input::placeholder,.cf-field textarea::placeholder{color:var(--dim)}
+.cf-field input:focus,.cf-field textarea:focus{outline:none;border-color:var(--cyan);background:rgba(7,9,15,.8);box-shadow:0 0 0 4px rgba(34,211,238,.12)}
+.cf-field.err input,.cf-field.err textarea{border-color:#f87171;box-shadow:0 0 0 4px rgba(248,113,113,.12)}
+.cf-hp{position:absolute!important;left:-9999px!important;width:1px;height:1px;opacity:0}
+.cf-foot{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:4px}
+.cf .btn{border:0;cursor:pointer;font-family:inherit}
+.cf .btn[disabled]{opacity:.6;cursor:wait;transform:none}
+.cf-status{font-size:14px;color:var(--muted);margin:0}
+.cf-status.ok{color:#34d399}
+.cf-status.bad{color:#f87171}
+@media (max-width:680px){.cf-row{grid-template-columns:1fr}.cf-foot .btn{width:100%;justify-content:center}}
+</style>
 </head>
 <body>
 <div class="bg" aria-hidden="true"></div>
@@ -932,6 +952,25 @@ nav.scrolled .nav-inner{background:rgba(12,16,25,.72);backdrop-filter:blur(16px)
           </a>
           <a href="https://doi.org/10.5334/jcaa.175" target="_blank" rel="noopener" class="btn btn-ghost">Publication</a>
         </div>
+        <div class="cf-or"><span>or send me a message right here</span></div>
+        <form class="cf" id="contactForm" action="https://formsubmit.co/devaaicloud@gmail.com" method="POST" novalidate>
+          <input type="hidden" name="_subject" value="New message from your portfolio (datturu.github.io)" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="text" name="_honey" class="cf-hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <div class="cf-row">
+            <label class="cf-field"><span>Full name</span><input type="text" name="name" required autocomplete="name" placeholder="Jane Smith" /></label>
+            <label class="cf-field"><span>Email address</span><input type="email" name="email" required autocomplete="email" placeholder="jane@company.com" /></label>
+          </div>
+          <label class="cf-field"><span>Subject</span><input type="text" name="subject" placeholder="GenAI Engineer role at Acme" /></label>
+          <label class="cf-field"><span>Message</span><textarea name="message" rows="5" required placeholder="A few lines about the role or project…"></textarea></label>
+          <div class="cf-foot">
+            <button type="submit" class="btn btn-primary" id="cfBtn">Send message
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg>
+            </button>
+            <p class="cf-status" id="cfStatus" role="status" aria-live="polite"></p>
+          </div>
+        </form>
       </div>
     </div>
   </section>
@@ -1022,6 +1061,33 @@ nav.scrolled .nav-inner{background:rgba(12,16,25,.72);backdrop-filter:blur(16px)
       if(d){e.preventDefault();var n=tabs[(i+d+tabs.length)%tabs.length];show(n);n.focus();}
     });
   });
+})();
+</script>
+<script>
+/* Contact form: sends via FormSubmit without leaving the page */
+(function(){
+  var f=document.getElementById('contactForm'); if(!f) return;
+  var btn=document.getElementById('cfBtn'), st=document.getElementById('cfStatus');
+  function setErr(el,on){el.closest('.cf-field').classList.toggle('err',on)}
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var bad=false;
+    [].forEach.call(f.querySelectorAll('[required]'),function(el){
+      var v=el.value.trim(), ok=v && (el.type!=='email' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
+      setErr(el,!ok); if(!ok && !bad){bad=true; el.focus();}
+    });
+    if(bad){st.className='cf-status bad';st.textContent='Please fill in your name, a valid email, and a message.';return;}
+    btn.disabled=true; st.className='cf-status'; st.textContent='Sending…';
+    fetch('https://formsubmit.co/ajax/devaaicloud@gmail.com',{method:'POST',headers:{'Accept':'application/json'},body:new FormData(f)})
+      .then(function(r){return r.json().then(function(d){return {ok:r.ok,d:d}})})
+      .then(function(res){
+        if(res.ok && String(res.d.success)==='true'){f.reset();st.className='cf-status ok';st.textContent='Thanks! Your message is on its way. I\'ll get back to you soon.';}
+        else throw new Error(res.d && res.d.message);
+      })
+      .catch(function(){st.className='cf-status bad';st.innerHTML='Something went wrong. Please email me directly at <a href="mailto:devaaicloud@gmail.com" style="color:var(--cyan)">devaaicloud@gmail.com</a>.';})
+      .finally(function(){btn.disabled=false;});
+  });
+  f.addEventListener('input',function(e){if(e.target.closest('.cf-field.err'))setErr(e.target,false)});
 })();
 </script>
 </body>
