@@ -327,6 +327,62 @@ nav.scrolled .nav-inner{background:rgba(12,16,25,.72);backdrop-filter:blur(16px)
   .nav-links a.nav-cta{margin:6px 0 0;text-align:center}
 }
 </style>
+
+<style id="projects-skills-v2">
+/* Projects: alternating image + text rows */
+.p-list{display:grid;gap:88px}
+.p-row{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:center}
+.p-row:nth-child(even) .p-media{order:2}
+.p-media{position:relative;border-radius:20px;overflow:hidden;border:1px solid var(--border);aspect-ratio:16/10;background:var(--bg-2);box-shadow:0 30px 60px -30px rgba(0,0,0,.8);transition:transform .4s,border-color .4s,box-shadow .4s}
+.p-media svg{display:block;width:100%;height:100%}
+.p-media::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+.p-row:hover .p-media{transform:translateY(-4px);border-color:rgba(34,211,238,.35);box-shadow:0 36px 70px -30px rgba(34,211,238,.25)}
+.p-meta{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.p-num{font-family:var(--mono);font-size:13px;color:var(--cyan)}
+.pub{font-family:var(--mono);font-size:11px;color:var(--violet);border:1px solid rgba(167,139,250,.35);background:rgba(167,139,250,.1);padding:2px 8px;border-radius:6px}
+.p-body h3{font-size:clamp(22px,2.6vw,28px);font-weight:800;letter-spacing:-.025em;line-height:1.2;margin-bottom:14px}
+.p-body p{color:var(--muted);font-size:15.5px;margin-bottom:12px}
+.p-body .tags{margin-top:18px}
+.p-links{display:flex;gap:18px;flex-wrap:wrap;margin-top:22px}
+.p-link{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:14px;color:var(--cyan);border-bottom:1px solid transparent;transition:border-color .2s,gap .2s}
+.p-link:hover{border-color:var(--cyan);gap:9px}
+.p-link svg{width:16px;height:16px}
+
+/* Skills: tabs + logo tiles */
+.sk-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.sk-tabs button{font:inherit;font-size:14px;font-weight:500;color:var(--muted);background:rgba(255,255,255,.03);border:1px solid var(--border);padding:9px 16px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:color .2s,border-color .2s,background .2s}
+.sk-tabs button:hover{color:var(--text);border-color:var(--border-strong)}
+.sk-tabs button[aria-selected="true"]{color:#07090f;background:var(--grad);border-color:transparent;font-weight:600;box-shadow:0 8px 24px -10px rgba(34,211,238,.6)}
+.sk-tabs .cnt{font-family:var(--mono);font-size:11px;opacity:.7}
+.sk-tabs button:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.sk-grid[hidden]{display:none}
+.sk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:14px;animation:skIn .4s ease}
+@keyframes skIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.sk{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:12px;text-align:center;padding:22px 10px 18px;border:1px solid var(--border);border-radius:16px;background:var(--card);transition:transform .25s,border-color .25s,background .25s}
+.sk:hover{transform:translateY(-4px);border-color:rgba(34,211,238,.4);background:var(--card-hover)}
+.sk-ico{width:52px;height:52px;display:grid;place-items:center;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06)}
+.sk-ico img,.sk-ico svg{width:30px;height:30px}
+.sk-ico img.inv{filter:invert(1) brightness(1.6)}
+.sk-ico .si{width:28px;height:28px;display:block;background:var(--c);-webkit-mask:var(--src) center/contain no-repeat;mask:var(--src) center/contain no-repeat}
+.sk-name{font-size:13.5px;font-weight:500;color:var(--text);line-height:1.3}
+
+@media (max-width:900px){
+  .p-row{grid-template-columns:1fr;gap:28px}
+  .p-row:nth-child(even) .p-media{order:0}
+  .p-list{gap:64px}
+}
+@media (max-width:680px){
+  .sk-tabs{flex-wrap:nowrap;overflow-x:auto;margin:0 -16px 24px;padding:0 16px 4px;scrollbar-width:none}
+  .sk-tabs::-webkit-scrollbar{display:none}
+  .sk-tabs button{flex:none}
+  .sk-grid{grid-template-columns:repeat(3,1fr);gap:10px}
+  .sk{padding:16px 6px 14px;gap:10px}
+  .sk-ico{width:44px;height:44px}
+  .sk-ico img,.sk-ico svg{width:26px;height:26px}
+  .sk-ico .si{width:24px;height:24px}
+  .sk-name{font-size:12px}
+}
+</style>
 </head>
 <body>
 <div class="bg" aria-hidden="true"></div>
@@ -522,66 +578,251 @@ nav.scrolled .nav-inner{background:rgba(12,16,25,.72);backdrop-filter:blur(16px)
         <h2>Things I've built</h2>
         <p class="sub">Personal and academic projects. Most of my professional work is proprietary, so it isn't shown here.</p>
       </div>
-      <div class="projects">
-        <div class="card project reveal">
-          <div class="p-top">
-            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg></div>
-            <span class="private">private</span>
-          </div>
-          <h3>Android LLM Agent</h3>
-          <p>An AI agent that controls an Android phone from plain-English goals, with an evaluation framework that compares prompting strategies.</p>
-          <div class="tags"><span class="tag">Python</span><span class="tag">OpenAI API</span><span class="tag">Pydantic</span></div>
-        </div>
+      <div class="p-list">
+        <article class="p-row reveal">
+          <div class="p-media"><svg viewBox="0 0 640 400" role="img" aria-label="Illustration: Android LLM Agent" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <pattern id="grid-android" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0v32" fill="none" stroke="rgba(255,255,255,0.045)"/></pattern>
+    <radialGradient id="glow-android" cx="30%" cy="20%" r="80%"><stop offset="0" stop-color="#22d3ee" stop-opacity=".16"/><stop offset=".5" stop-color="#a78bfa" stop-opacity=".08"/><stop offset="1" stop-color="#0c1019" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="640" height="400" fill="#0c1019"/>
+  <rect width="640" height="400" fill="url(#grid-android)"/>
+  <rect width="640" height="400" fill="url(#glow-android)"/>
+  
+  <g transform="translate(70 30)">
+    <rect width="180" height="340" rx="28" fill="#0a0d14" stroke="rgba(255,255,255,.18)" stroke-width="2"/>
+    <rect x="10" y="12" width="160" height="316" rx="20" fill="#121726"/>
+    <rect x="70" y="20" width="40" height="6" rx="3" fill="rgba(255,255,255,.14)"/>
+    <text x="24" y="54" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="700" fill="#e8ecf4">Settings</text>
+    <g font-family="Inter, system-ui, sans-serif" font-size="10.5" fill="#9aa4b8">
+      <rect x="20" y="70" width="140" height="30" rx="8" fill="rgba(255,255,255,.04)"/><circle cx="36" cy="85" r="6" fill="none" stroke="#6b7489" stroke-width="1.5"/><text x="50" y="89">Network</text>
+      <rect x="20" y="106" width="140" height="30" rx="8" fill="rgba(34,211,238,.12)" stroke="#22d3ee" stroke-opacity=".6"/><circle cx="36" cy="121" r="6" fill="none" stroke="#22d3ee" stroke-width="1.5"/><text x="50" y="125" fill="#e8ecf4">Display</text>
+      <rect x="20" y="142" width="140" height="30" rx="8" fill="rgba(255,255,255,.04)"/><circle cx="36" cy="157" r="6" fill="none" stroke="#6b7489" stroke-width="1.5"/><text x="50" y="161">Sound</text>
+      <rect x="20" y="178" width="140" height="30" rx="8" fill="rgba(255,255,255,.04)"/><circle cx="36" cy="193" r="6" fill="none" stroke="#6b7489" stroke-width="1.5"/><text x="50" y="197">Battery</text>
+      <rect x="20" y="214" width="140" height="30" rx="8" fill="rgba(255,255,255,.04)"/><circle cx="36" cy="229" r="6" fill="none" stroke="#6b7489" stroke-width="1.5"/><text x="50" y="233">Apps</text>
+    </g>
+    <circle cx="128" cy="121" r="16" fill="#22d3ee" fill-opacity=".15"/><circle cx="128" cy="121" r="7" fill="#22d3ee" fill-opacity=".55"/>
+    <rect x="20" y="266" width="140" height="44" rx="12" fill="rgba(167,139,250,.14)" stroke="#a78bfa" stroke-opacity=".45"/>
+    <text x="32" y="284" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#a78bfa">GOAL</text>
+    <text x="32" y="300" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="600" fill="#e8ecf4">Turn on dark mode</text>
+  </g>
+  <g transform="translate(290 62)">
+    <rect width="300" height="276" rx="16" fill="rgba(7,9,15,.8)" stroke="rgba(255,255,255,.12)"/>
+    <circle cx="20" cy="20" r="4.5" fill="#f87171"/><circle cx="36" cy="20" r="4.5" fill="#fbbf24"/><circle cx="52" cy="20" r="4.5" fill="#34d399"/>
+    <text x="74" y="24" font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" fill="#6b7489">agent.log</text>
+    <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="12.5">
+      <text x="20" y="64" fill="#6b7489">observe <tspan fill="#9aa4b8">screen → UI tree</tspan></text>
+      <text x="20" y="96" fill="#6b7489">think   <tspan fill="#9aa4b8">open Display settings</tspan></text>
+      <text x="20" y="128" fill="#22d3ee">act     <tspan fill="#e8ecf4">tap("Settings")</tspan></text>
+      <text x="20" y="160" fill="#22d3ee">act     <tspan fill="#e8ecf4">tap("Display")</tspan></text>
+      <text x="20" y="192" fill="#22d3ee">act     <tspan fill="#e8ecf4">toggle("Dark theme")</tspan></text>
+      <text x="20" y="232" fill="#34d399">✓ done  <tspan fill="#9aa4b8">goal reached</tspan></text>
+    </g>
+    <rect x="20" y="248" width="260" height="1" fill="rgba(255,255,255,0.08)"/>
+  </g>
 
-        <a class="card project reveal" href="https://github.com/datturu/sars-cov2-sequence-clustering" target="_blank" rel="noopener">
-          <div class="p-top">
-            <div class="icon v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3c0 6 10 6 10 12s-10 6-10 6M17 3c0 6-10 6-10 12M8 7h8M8 17h8"/></svg></div>
-            <span class="ext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
+</svg></div>
+          <div class="p-body">
+            <div class="p-meta"><span class="p-num">01</span><span class="private">private</span></div>
+            <h3>Android LLM Agent</h3>
+            <p>An AI agent that controls an Android phone from plain-English goals. It reads the screen, decides the next step, and taps, types, and swipes until the goal is done.</p><p>Comes with an evaluation framework that compares prompting strategies side by side.</p>
+            <div class="tags"><span class="tag">Python</span><span class="tag">OpenAI API</span><span class="tag">Pydantic</span><span class="tag">LLM agents</span></div>
+            
           </div>
-          <h3>SARS-CoV-2 Sequence Clustering</h3>
-          <p>Groups virus DNA sequences with DBSCAN and Levenshtein distance to find related strains and outliers.</p>
-          <div class="tags"><span class="tag">Python</span><span class="tag">scikit-learn</span><span class="tag">DBSCAN</span></div>
-        </a>
+        </article>
+        <article class="p-row reveal">
+          <div class="p-media"><svg viewBox="0 0 640 400" role="img" aria-label="Illustration: SARS-CoV-2 Sequence Clustering" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <pattern id="grid-sars" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0v32" fill="none" stroke="rgba(255,255,255,0.045)"/></pattern>
+    <radialGradient id="glow-sars" cx="30%" cy="20%" r="80%"><stop offset="0" stop-color="#22d3ee" stop-opacity=".16"/><stop offset=".5" stop-color="#a78bfa" stop-opacity=".08"/><stop offset="1" stop-color="#0c1019" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="640" height="400" fill="#0c1019"/>
+  <rect width="640" height="400" fill="url(#grid-sars)"/>
+  <rect width="640" height="400" fill="url(#glow-sars)"/>
+  
+  <text x="40" y="52" font-family="JetBrains Mono, ui-monospace, monospace" font-size="17" letter-spacing="3"><tspan fill="#22d3ee">A</tspan><tspan fill="#22d3ee">T</tspan><tspan fill="#a78bfa">G</tspan><tspan fill="#a78bfa">G</tspan><tspan fill="#a78bfa">C</tspan><tspan fill="#22d3ee">T</tspan><tspan fill="#22d3ee">T</tspan><tspan fill="#f472b6">C</tspan><tspan fill="#22d3ee">A</tspan><tspan fill="#22d3ee">A</tspan><tspan fill="#a78bfa">C</tspan><tspan fill="#a78bfa">G</tspan><tspan fill="#22d3ee">T</tspan><tspan fill="#22d3ee">T</tspan><tspan fill="#22d3ee">A</tspan><tspan fill="#a78bfa">G</tspan><tspan fill="#f472b6">C</tspan><tspan fill="#a78bfa">C</tspan><tspan fill="#22d3ee">T</tspan><tspan fill="#22d3ee">A</tspan><tspan fill="#a78bfa">G</tspan><tspan fill="#a78bfa">G</tspan><tspan fill="#22d3ee">A</tspan><tspan fill="#f472b6">T</tspan><tspan fill="#a78bfa">C</tspan><tspan fill="#a78bfa">C</tspan><tspan fill="#22d3ee">A</tspan><tspan fill="#22d3ee">A</tspan><tspan fill="#a78bfa">G</tspan><tspan fill="#22d3ee">T</tspan></text>
+  <text x="40" y="76" font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" fill="#6b7489">pairwise Levenshtein distance → DBSCAN</text>
+  <path d="M40 370H600M40 370V96" stroke="rgba(255,255,255,.12)"/>
+  <circle cx="170" cy="250" r="57" fill="#22d3ee" fill-opacity=".05" stroke="#22d3ee" stroke-opacity=".45" stroke-dasharray="4 5"/><circle cx="165.4" cy="259.2" r="4.2" fill="#22d3ee" fill-opacity=".85"/><circle cx="165.9" cy="244.3" r="4.2" fill="#22d3ee" fill-opacity=".85"/><circle cx="153.3" cy="246.2" r="4.2" fill="#22d3ee" fill-opacity=".85"/><circle cx="190.0" cy="257.6" r="4.2" fill="#22d3ee" fill-opacity=".85"/><circle cx="188.7" cy="254.5" r="4.2" fill="#22d3ee" fill-opacity=".85"/><circle cx="177.1" cy="253.3" r="4.2" fill="#22d3ee" fill-opacity=".85"/><circle cx="140.0" cy="265.4" r="4.2" fill="#22d3ee" fill-opacity=".85"/><circle cx="179.1" cy="259.0" r="4.2" fill="#22d3ee" fill-opacity=".85"/><circle cx="139.6" cy="218.6" r="4.2" fill="#22d3ee" fill-opacity=".85"/><circle cx="154.0" cy="241.6" r="4.2" fill="#22d3ee" fill-opacity=".85"/><circle cx="175.5" cy="249.2" r="4.2" fill="#22d3ee" fill-opacity=".85"/><circle cx="179.4" cy="238.4" r="4.2" fill="#22d3ee" fill-opacity=".85"/><circle cx="175.6" cy="257.1" r="4.2" fill="#22d3ee" fill-opacity=".85"/><circle cx="158.1" cy="280.9" r="4.2" fill="#22d3ee" fill-opacity=".85"/><circle cx="180.0" cy="271.5" r="4.2" fill="#22d3ee" fill-opacity=".85"/><circle cx="158.8" cy="236.7" r="4.2" fill="#22d3ee" fill-opacity=".85"/><circle cx="163.8" cy="248.1" r="4.2" fill="#22d3ee" fill-opacity=".85"/><circle cx="181.4" cy="254.5" r="4.2" fill="#22d3ee" fill-opacity=".85"/><circle cx="161.9" cy="232.8" r="4.2" fill="#22d3ee" fill-opacity=".85"/><circle cx="160.6" cy="272.0" r="4.2" fill="#22d3ee" fill-opacity=".85"/><circle cx="155.5" cy="254.4" r="4.2" fill="#22d3ee" fill-opacity=".85"/><circle cx="177.7" cy="223.2" r="4.2" fill="#22d3ee" fill-opacity=".85"/><circle cx="170.9" cy="273.5" r="4.2" fill="#22d3ee" fill-opacity=".85"/><circle cx="133.7" cy="244.2" r="4.2" fill="#22d3ee" fill-opacity=".85"/><circle cx="168.1" cy="235.3" r="4.2" fill="#22d3ee" fill-opacity=".85"/><circle cx="179.0" cy="248.9" r="4.2" fill="#22d3ee" fill-opacity=".85"/><circle cx="330" cy="190" r="65" fill="#a78bfa" fill-opacity=".05" stroke="#a78bfa" stroke-opacity=".45" stroke-dasharray="4 5"/><circle cx="300.1" cy="206.9" r="4.2" fill="#a78bfa" fill-opacity=".85"/><circle cx="343.7" cy="209.3" r="4.2" fill="#a78bfa" fill-opacity=".85"/><circle cx="359.4" cy="197.4" r="4.2" fill="#a78bfa" fill-opacity=".85"/><circle cx="332.4" cy="163.5" r="4.2" fill="#a78bfa" fill-opacity=".85"/><circle cx="342.6" cy="177.5" r="4.2" fill="#a78bfa" fill-opacity=".85"/><circle cx="320.8" cy="164.2" r="4.2" fill="#a78bfa" fill-opacity=".85"/><circle cx="310.3" cy="179.2" r="4.2" fill="#a78bfa" fill-opacity=".85"/><circle cx="356.3" cy="148.6" r="4.2" fill="#a78bfa" fill-opacity=".85"/><circle cx="300.3" cy="194.9" r="4.2" fill="#a78bfa" fill-opacity=".85"/><circle cx="359.4" cy="201.8" r="4.2" fill="#a78bfa" fill-opacity=".85"/><circle cx="291.2" cy="138.6" r="4.2" fill="#a78bfa" fill-opacity=".85"/><circle cx="337.3" cy="175.0" r="4.2" fill="#a78bfa" fill-opacity=".85"/><circle cx="307.2" cy="209.9" r="4.2" fill="#a78bfa" fill-opacity=".85"/><circle cx="352.5" cy="193.2" r="4.2" fill="#a78bfa" fill-opacity=".85"/><circle cx="335.0" cy="198.9" r="4.2" fill="#a78bfa" fill-opacity=".85"/><circle cx="362.5" cy="202.6" r="4.2" fill="#a78bfa" fill-opacity=".85"/><circle cx="340.6" cy="201.2" r="4.2" fill="#a78bfa" fill-opacity=".85"/><circle cx="298.0" cy="216.1" r="4.2" fill="#a78bfa" fill-opacity=".85"/><circle cx="349.5" cy="200.8" r="4.2" fill="#a78bfa" fill-opacity=".85"/><circle cx="289.7" cy="177.1" r="4.2" fill="#a78bfa" fill-opacity=".85"/><circle cx="347.2" cy="153.1" r="4.2" fill="#a78bfa" fill-opacity=".85"/><circle cx="326.2" cy="210.8" r="4.2" fill="#a78bfa" fill-opacity=".85"/><circle cx="303.3" cy="222.8" r="4.2" fill="#a78bfa" fill-opacity=".85"/><circle cx="341.3" cy="186.9" r="4.2" fill="#a78bfa" fill-opacity=".85"/><circle cx="336.6" cy="203.3" r="4.2" fill="#a78bfa" fill-opacity=".85"/><circle cx="332.5" cy="213.4" r="4.2" fill="#a78bfa" fill-opacity=".85"/><circle cx="316.5" cy="181.5" r="4.2" fill="#a78bfa" fill-opacity=".85"/><circle cx="351.3" cy="190.5" r="4.2" fill="#a78bfa" fill-opacity=".85"/><circle cx="312.0" cy="209.3" r="4.2" fill="#a78bfa" fill-opacity=".85"/><circle cx="359.9" cy="180.9" r="4.2" fill="#a78bfa" fill-opacity=".85"/><circle cx="480" cy="270" r="49" fill="#34d399" fill-opacity=".05" stroke="#34d399" stroke-opacity=".45" stroke-dasharray="4 5"/><circle cx="458.5" cy="267.9" r="4.2" fill="#34d399" fill-opacity=".85"/><circle cx="477.7" cy="265.4" r="4.2" fill="#34d399" fill-opacity=".85"/><circle cx="501.9" cy="254.0" r="4.2" fill="#34d399" fill-opacity=".85"/><circle cx="499.7" cy="250.2" r="4.2" fill="#34d399" fill-opacity=".85"/><circle cx="467.7" cy="279.9" r="4.2" fill="#34d399" fill-opacity=".85"/><circle cx="497.6" cy="283.4" r="4.2" fill="#34d399" fill-opacity=".85"/><circle cx="485.4" cy="272.2" r="4.2" fill="#34d399" fill-opacity=".85"/><circle cx="482.4" cy="279.0" r="4.2" fill="#34d399" fill-opacity=".85"/><circle cx="477.3" cy="274.3" r="4.2" fill="#34d399" fill-opacity=".85"/><circle cx="488.9" cy="270.0" r="4.2" fill="#34d399" fill-opacity=".85"/><circle cx="491.9" cy="278.8" r="4.2" fill="#34d399" fill-opacity=".85"/><circle cx="511.4" cy="275.1" r="4.2" fill="#34d399" fill-opacity=".85"/><circle cx="473.3" cy="264.2" r="4.2" fill="#34d399" fill-opacity=".85"/><circle cx="479.8" cy="284.4" r="4.2" fill="#34d399" fill-opacity=".85"/><circle cx="474.7" cy="276.0" r="4.2" fill="#34d399" fill-opacity=".85"/><circle cx="508.7" cy="230.0" r="4.2" fill="#34d399" fill-opacity=".85"/><circle cx="462.5" cy="273.8" r="4.2" fill="#34d399" fill-opacity=".85"/><circle cx="486.2" cy="273.7" r="4.2" fill="#34d399" fill-opacity=".85"/><circle cx="473.3" cy="280.2" r="4.2" fill="#34d399" fill-opacity=".85"/><circle cx="484.4" cy="261.9" r="4.2" fill="#34d399" fill-opacity=".85"/><circle cx="517.9" cy="275.5" r="4.2" fill="#34d399" fill-opacity=".85"/><circle cx="471.4" cy="268.4" r="4.2" fill="#34d399" fill-opacity=".85"/><path d="M85 145l10 10M95 145l-10 10" stroke="#f472b6" stroke-width="2.2" stroke-linecap="round"/><path d="M555 145l10 10M565 145l-10 10" stroke="#f472b6" stroke-width="2.2" stroke-linecap="round"/><path d="M245 340l10 10M255 340l-10 10" stroke="#f472b6" stroke-width="2.2" stroke-linecap="round"/><path d="M415 105l10 10M425 105l-10 10" stroke="#f472b6" stroke-width="2.2" stroke-linecap="round"/><path d="M585 335l10 10M595 335l-10 10" stroke="#f472b6" stroke-width="2.2" stroke-linecap="round"/><path d="M105 340l10 10M115 340l-10 10" stroke="#f472b6" stroke-width="2.2" stroke-linecap="round"/>
+  <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="11">
+    <rect x="452" y="84" width="150" height="54" rx="10" fill="rgba(7,9,15,.8)" stroke="rgba(255,255,255,.12)"/>
+    <circle cx="470" cy="103" r="4.5" fill="#22d3ee"/><circle cx="482" cy="103" r="4.5" fill="#a78bfa"/><circle cx="494" cy="103" r="4.5" fill="#34d399"/><text x="506" y="107" fill="#9aa4b8">clusters</text>
+    <path d="M466 119l8 8M474 119l-8 8" stroke="#f472b6" stroke-width="2" stroke-linecap="round"/><text x="506" y="127" fill="#9aa4b8">outliers</text>
+  </g>
 
-        <a class="card project reveal" href="https://github.com/datturu/face-recognition-attendance" target="_blank" rel="noopener">
-          <div class="p-top">
-            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="10" r="3"/><path d="M7 18c1-2.5 3-3.5 5-3.5s4 1 5 3.5"/></svg></div>
-            <span class="ext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
+</svg></div>
+          <div class="p-body">
+            <div class="p-meta"><span class="p-num">02</span></div>
+            <h3>SARS-CoV-2 Sequence Clustering</h3>
+            <p>Groups SARS-CoV-2 receptor-binding-domain DNA sequences into clusters to find related strains and flag outliers.</p><p>Builds a pairwise Levenshtein (edit) distance matrix, runs DBSCAN on it, scores the result with the silhouette score, and plots clusters against outliers.</p>
+            <div class="tags"><span class="tag">Python</span><span class="tag">scikit-learn</span><span class="tag">DBSCAN</span><span class="tag">Levenshtein</span><span class="tag">Matplotlib</span></div>
+            <div class="p-links"><a href="https://github.com/datturu/sars-cov2-sequence-clustering" target="_blank" rel="noopener" class="p-link">View code <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a></div>
           </div>
-          <h3>Face Recognition Attendance</h3>
-          <p>Automatic classroom attendance on a Raspberry Pi that recognizes faces in real time and emails the report.</p>
-          <div class="tags"><span class="tag">OpenCV</span><span class="tag">Raspberry Pi</span><span class="tag">IoT</span></div>
-        </a>
+        </article>
+        <article class="p-row reveal">
+          <div class="p-media"><svg viewBox="0 0 640 400" role="img" aria-label="Illustration: Face Recognition Attendance" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <pattern id="grid-face" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0v32" fill="none" stroke="rgba(255,255,255,0.045)"/></pattern>
+    <radialGradient id="glow-face" cx="30%" cy="20%" r="80%"><stop offset="0" stop-color="#22d3ee" stop-opacity=".16"/><stop offset=".5" stop-color="#a78bfa" stop-opacity=".08"/><stop offset="1" stop-color="#0c1019" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="640" height="400" fill="#0c1019"/>
+  <rect width="640" height="400" fill="url(#grid-face)"/>
+  <rect width="640" height="400" fill="url(#glow-face)"/>
+  
+  <g transform="translate(46 44)">
+    <rect width="290" height="312" rx="18" fill="#121726" stroke="rgba(255,255,255,.12)"/>
+    <g stroke="#22d3ee" stroke-width="3" fill="none" stroke-linecap="round">
+      <path d="M18 46V18h28M244 18h28v28M272 266v28h-28M46 294H18v-28"/>
+    </g>
+    <circle cx="258" cy="30" r="5" fill="#f87171"/><text x="222" y="34" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" fill="#9aa4b8">REC</text>
+    <ellipse cx="145" cy="138" rx="52" ry="62" fill="#1c2336" stroke="rgba(255,255,255,.18)" stroke-width="1.5"/>
+    <path d="M60 300c8-58 44-86 85-86s77 28 85 86" fill="#1c2336" stroke="rgba(255,255,255,.18)" stroke-width="1.5"/>
+    <path d="M125 128h.01M165 128h.01" stroke="#9aa4b8" stroke-width="6" stroke-linecap="round"/>
+    <path d="M130 162c9 7 21 7 30 0" stroke="#9aa4b8" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <rect x="80" y="64" width="130" height="150" rx="8" fill="none" stroke="#34d399" stroke-width="2.5"/>
+    <rect x="80" y="40" width="112" height="22" rx="6" fill="#34d399"/>
+    <text x="89" y="55" font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" font-weight="600" fill="#06121a">student_07 ✓</text>
+  </g>
+  <g transform="translate(366 70)">
+    <rect width="232" height="260" rx="16" fill="rgba(7,9,15,.8)" stroke="rgba(255,255,255,.12)"/>
+    <text x="20" y="34" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="700" fill="#e8ecf4">Attendance</text>
+    <text x="20" y="52" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" fill="#6b7489">live · Raspberry Pi cam</text>
+    <g font-family="Inter, system-ui, sans-serif" font-size="12">
+      <text x="20" y="88" fill="#9aa4b8">student_03</text><text x="212" y="88" text-anchor="end" fill="#34d399">present</text>
+      <text x="20" y="116" fill="#9aa4b8">student_07</text><text x="212" y="116" text-anchor="end" fill="#34d399">present</text>
+      <text x="20" y="144" fill="#9aa4b8">student_11</text><text x="212" y="144" text-anchor="end" fill="#6b7489">absent</text>
+      <text x="20" y="172" fill="#9aa4b8">student_12</text><text x="212" y="172" text-anchor="end" fill="#34d399">present</text>
+    </g>
+    <rect x="20" y="196" width="192" height="44" rx="10" fill="rgba(34,211,238,.1)" stroke="#22d3ee" stroke-opacity=".45"/>
+    <g transform="translate(34 208)" stroke="#22d3ee" stroke-width="1.8" fill="none" stroke-linejoin="round"><rect width="26" height="20" rx="3"/><path d="M0 3l13 9 13-9"/></g>
+    <text x="72" y="223" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="600" fill="#e8ecf4">Report emailed</text>
+  </g>
 
-        <a class="card project reveal" href="https://github.com/datturu/sdn-dns-cache" target="_blank" rel="noopener">
-          <div class="p-top">
-            <div class="icon v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="16" y="16" width="6" height="6" rx="1"/><path d="M12 8v4M5 16v-2h14v2"/></svg></div>
-            <span class="ext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
+</svg></div>
+          <div class="p-body">
+            <div class="p-meta"><span class="p-num">03</span></div>
+            <h3>Face Recognition Attendance</h3>
+            <p>Automatic classroom attendance on a Raspberry Pi. A USB camera recognizes students in real time and marks them present.</p><p>Uses OpenCV Haar cascades for detection and an LBPH recognizer, then emails the present and absent lists when class ends.</p>
+            <div class="tags"><span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">Raspberry Pi</span><span class="tag">IoT</span><span class="tag">SMTP</span></div>
+            <div class="p-links"><a href="https://github.com/datturu/face-recognition-attendance" target="_blank" rel="noopener" class="p-link">View code <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a></div>
           </div>
-          <h3>SDN DNS Cache</h3>
-          <p>Speeds up DNS lookups in a software-defined network by caching responses inside the Ryu controller.</p>
-          <div class="tags"><span class="tag">Ryu</span><span class="tag">Mininet</span><span class="tag">BIND9</span></div>
-        </a>
+        </article>
+        <article class="p-row reveal">
+          <div class="p-media"><svg viewBox="0 0 640 400" role="img" aria-label="Illustration: SDN DNS Cache" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <pattern id="grid-sdn" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0v32" fill="none" stroke="rgba(255,255,255,0.045)"/></pattern>
+    <radialGradient id="glow-sdn" cx="30%" cy="20%" r="80%"><stop offset="0" stop-color="#22d3ee" stop-opacity=".16"/><stop offset=".5" stop-color="#a78bfa" stop-opacity=".08"/><stop offset="1" stop-color="#0c1019" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="640" height="400" fill="#0c1019"/>
+  <rect width="640" height="400" fill="url(#grid-sdn)"/>
+  <rect width="640" height="400" fill="url(#glow-sdn)"/>
+  
+  <defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0l10 5-10 5z" fill="#9aa4b8"/></marker>
+  <marker id="arc" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0l10 5-10 5z" fill="#22d3ee"/></marker></defs>
+  <text x="36" y="70" font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" fill="#6b7489">mininet</text>
+  <rect x="36" y="110" width="74" height="40" rx="10" fill="#121726" stroke="rgba(255,255,255,.18)"/><text x="73" y="135" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="12" fill="#e8ecf4">h1</text><rect x="36" y="180" width="74" height="40" rx="10" fill="#121726" stroke="rgba(255,255,255,.18)"/><text x="73" y="205" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="12" fill="#e8ecf4">h2</text><rect x="36" y="250" width="74" height="40" rx="10" fill="#121726" stroke="rgba(255,255,255,.18)"/><text x="73" y="275" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="12" fill="#e8ecf4">h3</text>
+  <path d="M110 130L160 190M110 200H160M110 270L160 210" stroke="rgba(255,255,255,.25)" stroke-width="1.5"/>
+  <rect x="160" y="171" width="104" height="58" rx="12" fill="rgba(7,9,15,.85)" stroke="#a78bfa" stroke-opacity=".7"/><text x="212.0" y="197" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="700" fill="#e8ecf4">Switch</text><text x="212.0" y="214" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" fill="#9aa4b8">OpenFlow</text>
+  <path d="M264 200H300" stroke="#9aa4b8" stroke-width="1.5" marker-end="url(#ar)"/>
+  <rect x="302" y="120" width="168" height="160" rx="16" fill="rgba(34,211,238,.06)" stroke="#22d3ee" stroke-opacity=".7"/>
+  <text x="386" y="148" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="700" fill="#e8ecf4">Ryu controller</text>
+  <rect x="320" y="162" width="132" height="100" rx="10" fill="rgba(7,9,15,.85)" stroke="rgba(255,255,255,.12)"/>
+  <text x="332" y="182" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" fill="#22d3ee">DNS CACHE</text>
+  <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="10.5" fill="#9aa4b8"><text x="332" y="204">example.com  ✓</text><text x="332" y="224">github.com   ✓</text><text x="332" y="244">wiki.org     ✓</text></g>
+  <path d="M470 200H508" stroke="#9aa4b8" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#ar)"/>
+  <text x="489" y="190" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9.5" fill="#6b7489">miss</text>
+  <rect x="510" y="171" width="100" height="58" rx="12" fill="rgba(7,9,15,.85)" stroke="#a78bfa" stroke-opacity=".7"/><text x="560.0" y="197" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="700" fill="#e8ecf4">BIND9</text><text x="560.0" y="214" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" fill="#9aa4b8">DNS server</text>
+  <path d="M386 282C386 350 120 360 76 296" fill="none" stroke="#22d3ee" stroke-width="2" marker-end="url(#arc)"/>
+  <rect x="192" y="320" width="176" height="26" rx="13" fill="#0c1019" stroke="#22d3ee" stroke-opacity=".6"/>
+  <text x="280" y="337" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" fill="#22d3ee">cache hit → instant reply</text>
 
-        <a class="card project reveal" href="https://github.com/datturu/python-ray-tracer" target="_blank" rel="noopener">
-          <div class="p-top">
-            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg></div>
-            <span class="ext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
+</svg></div>
+          <div class="p-body">
+            <div class="p-meta"><span class="p-num">04</span></div>
+            <h3>SDN DNS Cache</h3>
+            <p>Speeds up DNS lookups in a software-defined network. The Ryu controller intercepts DNS traffic and answers repeat lookups from its own cache instead of forwarding them to the DNS server.</p><p>Tested on a virtual network emulated with Mininet, with BIND9 as the DNS server.</p>
+            <div class="tags"><span class="tag">Ryu</span><span class="tag">Mininet</span><span class="tag">OpenFlow</span><span class="tag">BIND9</span><span class="tag">Python</span></div>
+            <div class="p-links"><a href="https://github.com/datturu/sdn-dns-cache" target="_blank" rel="noopener" class="p-link">View code <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a></div>
           </div>
-          <h3>Python Ray Tracer</h3>
-          <p>A ray tracer built from scratch with NumPy that renders spheres on a plane with shading.</p>
-          <div class="tags"><span class="tag">Python</span><span class="tag">NumPy</span><span class="tag">Graphics</span></div>
-        </a>
+        </article>
+        <article class="p-row reveal">
+          <div class="p-media"><svg viewBox="0 0 640 400" role="img" aria-label="Illustration: Python Ray Tracer" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <pattern id="grid-ray" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0v32" fill="none" stroke="rgba(255,255,255,0.045)"/></pattern>
+    <radialGradient id="glow-ray" cx="30%" cy="20%" r="80%"><stop offset="0" stop-color="#22d3ee" stop-opacity=".16"/><stop offset=".5" stop-color="#a78bfa" stop-opacity=".08"/><stop offset="1" stop-color="#0c1019" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="640" height="400" fill="#0c1019"/>
+  <rect width="640" height="400" fill="url(#grid-ray)"/>
+  <rect width="640" height="400" fill="url(#glow-ray)"/>
+  
+  <defs>
+    <radialGradient id="sph1" cx="35%" cy="32%" r="70%"><stop offset="0" stop-color="#fda4af"/><stop offset=".35" stop-color="#e11d48"/><stop offset="1" stop-color="#2a0710"/></radialGradient>
+    <radialGradient id="sph2" cx="35%" cy="32%" r="70%"><stop offset="0" stop-color="#bbf7d0"/><stop offset=".35" stop-color="#16a34a"/><stop offset="1" stop-color="#03200e"/></radialGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1c2336"/><stop offset="1" stop-color="#0c1019"/></linearGradient>
+  </defs>
+  <path d="M0 280L640 250V400H0z" fill="url(#floor)"/>
+  <ellipse cx="342" cy="283" rx="70" ry="12" fill="#000" opacity=".5"/>
+  <ellipse cx="492" cy="276" rx="62" ry="11" fill="#000" opacity=".5"/>
+  <circle cx="342" cy="210" r="72" fill="url(#sph1)"/>
+  <circle cx="492" cy="212" r="62" fill="url(#sph2)"/>
+  <g stroke="rgba(255,255,255,.2)" fill="rgba(34,211,238,.05)">
+    <path d="M170 110L230 124V286L170 300z"/>
+    <path d="M185 113.5V296.5M200 117V293M215 120.5V289.5M170 157.5L230 164M170 205L230 204M170 252.5L230 245" fill="none" stroke-opacity=".6"/>
+  </g>
+  <path d="M92 200L330 160" stroke="#fbbf24" stroke-opacity=".55" stroke-width="1.2"/><path d="M92 200L318 214" stroke="#fbbf24" stroke-opacity=".55" stroke-width="1.2"/><path d="M92 200L470 190" stroke="#fbbf24" stroke-opacity=".55" stroke-width="1.2"/><path d="M92 200L486 236" stroke="#fbbf24" stroke-opacity=".55" stroke-width="1.2"/><path d="M92 200L400 322" stroke="#fbbf24" stroke-opacity=".55" stroke-width="1.2"/><path d="M92 200L560 318" stroke="#fbbf24" stroke-opacity=".55" stroke-width="1.2"/>
+  <g transform="translate(60 180)"><rect width="40" height="40" rx="8" fill="#121726" stroke="#22d3ee" stroke-opacity=".7"/><circle cx="20" cy="20" r="8" fill="none" stroke="#22d3ee" stroke-width="2"/></g>
+  <text x="80" y="244" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10.5" fill="#9aa4b8">camera</text>
+  <text x="200" y="100" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10.5" fill="#9aa4b8">image plane</text>
+  <g transform="translate(560 70)"><circle r="14" fill="#fbbf24"/><circle r="26" fill="#fbbf24" opacity=".15"/><path d="M-34 0h-10M34 0h10M0-34v-10M0 34v10" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/></g>
+  <text x="560" y="130" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10.5" fill="#9aa4b8">light</text>
 
-        <a class="card project reveal" href="https://doi.org/10.5334/jcaa.175" target="_blank" rel="noopener">
-          <div class="p-top">
-            <div class="icon v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h12l4 4v12H4z"/><path d="M8 12h8M8 16h5M8 8h4"/></svg></div>
-            <span class="ext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
+</svg></div>
+          <div class="p-body">
+            <div class="p-meta"><span class="p-num">05</span></div>
+            <h3>Python Ray Tracer</h3>
+            <p>A ray tracer built from scratch with NumPy. It casts a ray through every pixel, finds the closest sphere or plane it hits, and shades it from the surface normal and light direction.</p><p>Renders a scene of two spheres on a plane to a PNG, with a step-by-step Jupyter notebook version.</p>
+            <div class="tags"><span class="tag">Python</span><span class="tag">NumPy</span><span class="tag">Pillow</span><span class="tag">Jupyter</span><span class="tag">Graphics</span></div>
+            <div class="p-links"><a href="https://github.com/datturu/python-ray-tracer" target="_blank" rel="noopener" class="p-link">View code <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a></div>
           </div>
-          <h3>Indus Script Digitization</h3>
-          <p>Deep-learning pipeline that reads Indus Valley script and motifs from seal images. Published in 2025.</p>
-          <div class="tags"><span class="tag">YOLOv3</span><span class="tag">MobileNet</span><span class="tag">MySQL</span></div>
-        </a>
+        </article>
+        <article class="p-row reveal">
+          <div class="p-media"><svg viewBox="0 0 640 400" role="img" aria-label="Illustration: Indus Script Digitization" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <pattern id="grid-indus" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0v32" fill="none" stroke="rgba(255,255,255,0.045)"/></pattern>
+    <radialGradient id="glow-indus" cx="30%" cy="20%" r="80%"><stop offset="0" stop-color="#22d3ee" stop-opacity=".16"/><stop offset=".5" stop-color="#a78bfa" stop-opacity=".08"/><stop offset="1" stop-color="#0c1019" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="640" height="400" fill="#0c1019"/>
+  <rect width="640" height="400" fill="url(#grid-indus)"/>
+  <rect width="640" height="400" fill="url(#glow-indus)"/>
+  
+  <g transform="translate(52 60)">
+    <rect width="290" height="280" rx="22" fill="#2b2a2e" stroke="#4a4540" stroke-width="2"/>
+    <rect x="10" y="10" width="270" height="260" rx="16" fill="none" stroke="rgba(214,199,161,.18)"/>
+    <g transform="translate(32 40)" stroke="#d6c7a1" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M0 0v36M10 0v36M20 0v36"/></g><rect x="24" y="30" width="38" height="56" rx="5" fill="none" stroke="#22d3ee" stroke-width="1.6"/><g transform="translate(82 40)" stroke="#d6c7a1" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M18 0v36M4 8l14 10 14-10"/></g><rect x="74" y="30" width="46" height="56" rx="5" fill="none" stroke="#22d3ee" stroke-width="1.6"/><g transform="translate(132 40)" stroke="#d6c7a1" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="14" cy="18" rx="12" ry="16"/><path d="M14 2v32"/></g><rect x="124" y="30" width="46" height="56" rx="5" fill="none" stroke="#22d3ee" stroke-width="1.6"/><g transform="translate(182 40)" stroke="#d6c7a1" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M0 36L16 0l16 36M6 22h20"/></g><rect x="174" y="30" width="46" height="56" rx="5" fill="none" stroke="#22d3ee" stroke-width="1.6"/><g transform="translate(232 40)" stroke="#d6c7a1" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M0 0h28v36H0zM0 18h28"/></g><rect x="224" y="30" width="46" height="56" rx="5" fill="none" stroke="#22d3ee" stroke-width="1.6"/>
+    <text x="24" y="24" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" fill="#22d3ee">signs · YOLOv3</text>
+    <g transform="translate(64 118)" stroke="#d6c7a1" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 50c10-20 40-26 70-24 30 2 60 6 76 18 8 6 10 18 4 24"/>
+      <path d="M40 60v58M70 64v54M130 66v52M156 62v56"/>
+      <path d="M166 44c8-8 14-20 12-34M170 70l18-4"/>
+      <path d="M20 50c-8 6-14 18-10 28"/>
+    </g>
+    <rect x="50" y="120" width="200" height="134" rx="8" fill="none" stroke="#a78bfa" stroke-width="1.8" stroke-dasharray="6 5"/>
+    <rect x="178" y="240" width="72" height="20" rx="6" fill="#a78bfa"/>
+    <text x="214" y="254" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10.5" font-weight="600" fill="#0c1019">motif</text>
+  </g>
+  <g transform="translate(392 62)" font-family="JetBrains Mono, ui-monospace, monospace">
+    <rect x="0" y="0" width="200" height="50" rx="12" fill="rgba(7,9,15,.85)" stroke="#22d3ee" stroke-opacity=".6"/><text x="18" y="22" font-size="13" font-weight="600" fill="#e8ecf4">YOLOv3</text><text x="18" y="39" font-size="10" fill="#9aa4b8">find each sign</text><path d="M100 52v14" stroke="#9aa4b8" stroke-width="1.5"/><rect x="0" y="70" width="200" height="50" rx="12" fill="rgba(7,9,15,.85)" stroke="#22d3ee" stroke-opacity=".6"/><text x="18" y="92" font-size="13" font-weight="600" fill="#e8ecf4">MobileNet</text><text x="18" y="109" font-size="10" fill="#9aa4b8">identify the sign</text><path d="M100 122v14" stroke="#9aa4b8" stroke-width="1.5"/><rect x="0" y="140" width="200" height="50" rx="12" fill="rgba(7,9,15,.85)" stroke="#a78bfa" stroke-opacity=".6"/><text x="18" y="162" font-size="13" font-weight="600" fill="#e8ecf4">CNN</text><text x="18" y="179" font-size="10" fill="#9aa4b8">identify the motif</text><path d="M100 192v14" stroke="#9aa4b8" stroke-width="1.5"/><rect x="0" y="210" width="200" height="50" rx="12" fill="rgba(7,9,15,.85)" stroke="#34d399" stroke-opacity=".6"/><text x="18" y="232" font-size="13" font-weight="600" fill="#e8ecf4">MySQL</text><text x="18" y="249" font-size="10" fill="#9aa4b8">archive & query</text>
+  </g>
+
+</svg></div>
+          <div class="p-body">
+            <div class="p-meta"><span class="p-num">06</span><span class="pub">published · 2025</span></div>
+            <h3>Indus Script Digitization</h3>
+            <p>Deep-learning pipeline that reads the undeciphered Indus Valley script from seal images. YOLOv3 finds each sign, MobileNet identifies it, and a CNN classifies the seal&#39;s motif.</p><p>Everything is archived in a searchable MySQL database. Published in the Journal of Computer Applications in Archaeology.</p>
+            <div class="tags"><span class="tag">YOLOv3</span><span class="tag">MobileNet</span><span class="tag">CNN</span><span class="tag">MySQL</span></div>
+            <div class="p-links"><a href="https://doi.org/10.5334/jcaa.175" target="_blank" rel="noopener" class="p-link">Read the paper <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a><a href="https://repository.fit.edu/etd/1416" target="_blank" rel="noopener" class="p-link">Master&#39;s thesis <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a></div>
+          </div>
+        </article>
       </div>
     </div>
   </section>
@@ -594,30 +835,71 @@ nav.scrolled .nav-inner{background:rgba(12,16,25,.72);backdrop-filter:blur(16px)
         <h2>Tech stack</h2>
         <p class="sub">The tools I use to design, build, and ship.</p>
       </div>
-      <div class="skills">
-        <div class="card skill reveal">
-          <h3><i></i>GenAI &amp; LLMs</h3>
-          <div class="chips"><span class="chip">RAG</span><span class="chip">Hybrid search</span><span class="chip">Agentic workflows</span><span class="chip">Structured outputs</span><span class="chip">Prompt engineering</span><span class="chip">LangChain</span><span class="chip">LlamaIndex</span><span class="chip">FAISS</span><span class="chip">Pinecone</span><span class="chip">Claude</span><span class="chip">GPT-4</span></div>
+      <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="sk-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#a78bfa"/></linearGradient></defs></svg>
+      <div class="reveal">
+        <div class="sk-tabs" role="tablist" aria-label="Skill categories">
+          <button role="tab" id="tab-genai" aria-controls="panel-genai" aria-selected="true">GenAI &amp; LLMs<span class="cnt">12</span></button><button role="tab" id="tab-ml" aria-controls="panel-ml" aria-selected="false" tabindex="-1">ML &amp; Data<span class="cnt">12</span></button><button role="tab" id="tab-cloud" aria-controls="panel-cloud" aria-selected="false" tabindex="-1">Cloud<span class="cnt">14</span></button><button role="tab" id="tab-devops" aria-controls="panel-devops" aria-selected="false" tabindex="-1">DevOps<span class="cnt">8</span></button><button role="tab" id="tab-tools" aria-controls="panel-tools" aria-selected="false" tabindex="-1">Automation &amp; Tools<span class="cnt">7</span></button>
         </div>
-        <div class="card skill reveal">
-          <h3><i></i>Machine Learning &amp; Data</h3>
-          <div class="chips"><span class="chip">Python</span><span class="chip">SQL</span><span class="chip">TensorFlow</span><span class="chip">PyTorch</span><span class="chip">scikit-learn</span><span class="chip">Pandas</span><span class="chip">NumPy</span><span class="chip">PostgreSQL</span><span class="chip">BigQuery</span><span class="chip">OpenCV</span></div>
-        </div>
-        <div class="card skill reveal">
-          <h3><i></i>AWS</h3>
-          <div class="chips"><span class="chip">EKS</span><span class="chip">Lambda</span><span class="chip">SageMaker</span><span class="chip">Bedrock</span><span class="chip">S3</span><span class="chip">EC2</span><span class="chip">IAM</span><span class="chip">CloudWatch</span></div>
-        </div>
-        <div class="card skill reveal">
-          <h3><i></i>Google Cloud</h3>
-          <div class="chips"><span class="chip">Cloud Run</span><span class="chip">BigQuery</span><span class="chip">Pub/Sub</span><span class="chip">Cloud Storage</span><span class="chip">Cloud Build</span></div>
-        </div>
-        <div class="card skill reveal">
-          <h3><i></i>DevOps</h3>
-          <div class="chips"><span class="chip">Docker</span><span class="chip">Kubernetes</span><span class="chip">Terraform</span><span class="chip">GitHub Actions</span><span class="chip">Jenkins</span><span class="chip">Prometheus</span><span class="chip">Grafana</span></div>
-        </div>
-        <div class="card skill reveal">
-          <h3><i></i>Automation &amp; Collaboration</h3>
-          <div class="chips"><span class="chip">Selenium</span><span class="chip">Playwright</span><span class="chip">REST APIs</span><span class="chip">React</span><span class="chip">Flask</span><span class="chip">Git</span><span class="chip">Jira</span><span class="chip">Agile / Scrum</span></div>
+        <div class="sk-panels">
+          <div class="sk-grid" role="tabpanel" id="panel-genai" aria-labelledby="tab-genai">
+            <div class="sk"><span class="sk-ico"><i class="si" style="--src:url(https://cdn.jsdelivr.net/npm/simple-icons@13/icons/claude.svg);--c:#D97757"></i></span><span class="sk-name">Claude</span></div>
+            <div class="sk"><span class="sk-ico"><i class="si" style="--src:url(https://cdn.jsdelivr.net/npm/simple-icons@13/icons/openai.svg);--c:#e8ecf4"></i></span><span class="sk-name">GPT-4</span></div>
+            <div class="sk"><span class="sk-ico"><i class="si" style="--src:url(https://cdn.jsdelivr.net/npm/simple-icons@13/icons/langchain.svg);--c:#7fd3c5"></i></span><span class="sk-name">LangChain</span></div>
+            <div class="sk"><span class="sk-ico"><svg viewBox="0 0 24 24" fill="none" stroke="url(#sk-grad)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V9l3-5 2 4h4l2-4 3 5v11"/><path d="M9 13h.01M15 13h.01M10 17h4"/></svg></span><span class="sk-name">LlamaIndex</span></div>
+            <div class="sk"><span class="sk-ico"><i class="si" style="--src:url(https://cdn.jsdelivr.net/npm/simple-icons@13/icons/huggingface.svg);--c:#FFD21E"></i></span><span class="sk-name">Hugging Face</span></div>
+            <div class="sk"><span class="sk-ico"><svg viewBox="0 0 24 24" fill="none" stroke="url(#sk-grad)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h10M4 10h7M4 14h5"/><circle cx="16.5" cy="15.5" r="3.5"/><path d="M19 18l2.5 2.5"/></svg></span><span class="sk-name">RAG</span></div>
+            <div class="sk"><span class="sk-ico"><svg viewBox="0 0 24 24" fill="none" stroke="url(#sk-grad)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="12" r="5.5"/><circle cx="15" cy="12" r="5.5"/></svg></span><span class="sk-name">Hybrid search</span></div>
+            <div class="sk"><span class="sk-ico"><svg viewBox="0 0 24 24" fill="none" stroke="url(#sk-grad)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/><circle cx="12" cy="3.5" r="1"/></svg></span><span class="sk-name">Agentic workflows</span></div>
+            <div class="sk"><span class="sk-ico"><svg viewBox="0 0 24 24" fill="none" stroke="url(#sk-grad)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4c-2 0-3 1-3 3v2c0 1.5-1 2.5-2 3 1 .5 2 1.5 2 3v2c0 2 1 3 3 3M16 4c2 0 3 1 3 3v2c0 1.5 1 2.5 2 3-1 .5-2 1.5-2 3v2c0 2-1 3-3 3"/><path d="M10 12h4"/></svg></span><span class="sk-name">Structured outputs</span></div>
+            <div class="sk"><span class="sk-ico"><svg viewBox="0 0 24 24" fill="none" stroke="url(#sk-grad)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M7 9l3 3-3 3M12 15h5"/></svg></span><span class="sk-name">Prompt engineering</span></div>
+            <div class="sk"><span class="sk-ico"><svg viewBox="0 0 24 24" fill="none" stroke="url(#sk-grad)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="18" r="1.6"/><circle cx="12" cy="6" r="1.6"/><circle cx="19" cy="14" r="1.6"/><circle cx="9" cy="12" r="1.6"/><path d="M5 18l4-6 3-6M9 12l10 2"/></svg></span><span class="sk-name">FAISS</span></div>
+            <div class="sk"><span class="sk-ico"><svg viewBox="0 0 24 24" fill="none" stroke="url(#sk-grad)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l5 7h-3l4 6h-4l2 4H8l2-4H6l4-6H7z"/></svg></span><span class="sk-name">Pinecone</span></div>
+          </div><div class="sk-grid" role="tabpanel" id="panel-ml" aria-labelledby="tab-ml" hidden>
+            <div class="sk"><span class="sk-ico"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/python/python-original.svg" alt="" loading="lazy" width="40" height="40" /></span><span class="sk-name">Python</span></div>
+            <div class="sk"><span class="sk-ico"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/tensorflow/tensorflow-original.svg" alt="" loading="lazy" width="40" height="40" /></span><span class="sk-name">TensorFlow</span></div>
+            <div class="sk"><span class="sk-ico"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/pytorch/pytorch-original.svg" alt="" loading="lazy" width="40" height="40" /></span><span class="sk-name">PyTorch</span></div>
+            <div class="sk"><span class="sk-ico"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/scikitlearn/scikitlearn-original.svg" alt="" loading="lazy" width="40" height="40" /></span><span class="sk-name">scikit-learn</span></div>
+            <div class="sk"><span class="sk-ico"><i class="si" style="--src:url(https://cdn.jsdelivr.net/npm/simple-icons@13/icons/pandas.svg);--c:#a78bfa"></i></span><span class="sk-name">Pandas</span></div>
+            <div class="sk"><span class="sk-ico"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/numpy/numpy-original.svg" alt="" loading="lazy" width="40" height="40" /></span><span class="sk-name">NumPy</span></div>
+            <div class="sk"><span class="sk-ico"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/opencv/opencv-original.svg" alt="" loading="lazy" width="40" height="40" /></span><span class="sk-name">OpenCV</span></div>
+            <div class="sk"><span class="sk-ico"><svg viewBox="0 0 24 24" fill="none" stroke="url(#sk-grad)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg></span><span class="sk-name">SQL</span></div>
+            <div class="sk"><span class="sk-ico"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/postgresql/postgresql-original.svg" alt="" loading="lazy" width="40" height="40" /></span><span class="sk-name">PostgreSQL</span></div>
+            <div class="sk"><span class="sk-ico"><i class="si" style="--src:url(https://cdn.jsdelivr.net/npm/simple-icons@13/icons/googlebigquery.svg);--c:#669DF6"></i></span><span class="sk-name">BigQuery</span></div>
+            <div class="sk"><span class="sk-ico"><i class="si" style="--src:url(https://cdn.jsdelivr.net/npm/simple-icons@13/icons/mysql.svg);--c:#4fb3d9"></i></span><span class="sk-name">MySQL</span></div>
+            <div class="sk"><span class="sk-ico"><i class="si" style="--src:url(https://cdn.jsdelivr.net/npm/simple-icons@13/icons/jupyter.svg);--c:#F37626"></i></span><span class="sk-name">Jupyter</span></div>
+          </div><div class="sk-grid" role="tabpanel" id="panel-cloud" aria-labelledby="tab-cloud" hidden>
+            <div class="sk"><span class="sk-ico"><i class="si" style="--src:url(https://cdn.jsdelivr.net/npm/simple-icons@13/icons/amazonwebservices.svg);--c:#FF9900"></i></span><span class="sk-name">AWS</span></div>
+            <div class="sk"><span class="sk-ico"><i class="si" style="--src:url(https://cdn.jsdelivr.net/npm/simple-icons@13/icons/awslambda.svg);--c:#FF9900"></i></span><span class="sk-name">Lambda</span></div>
+            <div class="sk"><span class="sk-ico"><i class="si" style="--src:url(https://cdn.jsdelivr.net/npm/simple-icons@13/icons/amazonec2.svg);--c:#FF9900"></i></span><span class="sk-name">EC2</span></div>
+            <div class="sk"><span class="sk-ico"><i class="si" style="--src:url(https://cdn.jsdelivr.net/npm/simple-icons@13/icons/amazons3.svg);--c:#7AA116"></i></span><span class="sk-name">S3</span></div>
+            <div class="sk"><span class="sk-ico"><i class="si" style="--src:url(https://cdn.jsdelivr.net/npm/simple-icons@13/icons/amazoneks.svg);--c:#FF9900"></i></span><span class="sk-name">EKS</span></div>
+            <div class="sk"><span class="sk-ico"><i class="si" style="--src:url(https://cdn.jsdelivr.net/npm/simple-icons@13/icons/amazoniam.svg);--c:#DD344C"></i></span><span class="sk-name">IAM</span></div>
+            <div class="sk"><span class="sk-ico"><i class="si" style="--src:url(https://cdn.jsdelivr.net/npm/simple-icons@13/icons/amazoncloudwatch.svg);--c:#FF4F8B"></i></span><span class="sk-name">CloudWatch</span></div>
+            <div class="sk"><span class="sk-ico"><svg viewBox="0 0 24 24" fill="none" stroke="url(#sk-grad)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4a3 3 0 0 0-3 3 3 3 0 0 0-2 5 3 3 0 0 0 2 5 3 3 0 0 0 3 3h1V4zM15 4a3 3 0 0 1 3 3 3 3 0 0 1 2 5 3 3 0 0 1-2 5 3 3 0 0 1-3 3h-1V4z"/></svg></span><span class="sk-name">SageMaker</span></div>
+            <div class="sk"><span class="sk-ico"><svg viewBox="0 0 24 24" fill="none" stroke="url(#sk-grad)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a5 5 0 0 1-.6-9.96A6 6 0 0 1 18 7a4.5 4.5 0 0 1 .5 9H7z"/></svg></span><span class="sk-name">Bedrock</span></div>
+            <div class="sk"><span class="sk-ico"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/googlecloud/googlecloud-original.svg" alt="" loading="lazy" width="40" height="40" /></span><span class="sk-name">Google Cloud</span></div>
+            <div class="sk"><span class="sk-ico"><svg viewBox="0 0 24 24" fill="none" stroke="url(#sk-grad)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h9M11 8l4 4-4 4"/><rect x="15" y="5" width="5" height="14" rx="2"/></svg></span><span class="sk-name">Cloud Run</span></div>
+            <div class="sk"><span class="sk-ico"><i class="si" style="--src:url(https://cdn.jsdelivr.net/npm/simple-icons@13/icons/googlepubsub.svg);--c:#669DF6"></i></span><span class="sk-name">Pub/Sub</span></div>
+            <div class="sk"><span class="sk-ico"><i class="si" style="--src:url(https://cdn.jsdelivr.net/npm/simple-icons@13/icons/googlecloudstorage.svg);--c:#669DF6"></i></span><span class="sk-name">Cloud Storage</span></div>
+            <div class="sk"><span class="sk-ico"><svg viewBox="0 0 24 24" fill="none" stroke="url(#sk-grad)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 6l4 4-8 8H6v-4z"/><path d="M12 8l4 4"/></svg></span><span class="sk-name">Cloud Build</span></div>
+          </div><div class="sk-grid" role="tabpanel" id="panel-devops" aria-labelledby="tab-devops" hidden>
+            <div class="sk"><span class="sk-ico"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/docker/docker-original.svg" alt="" loading="lazy" width="40" height="40" /></span><span class="sk-name">Docker</span></div>
+            <div class="sk"><span class="sk-ico"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/kubernetes/kubernetes-original.svg" alt="" loading="lazy" width="40" height="40" /></span><span class="sk-name">Kubernetes</span></div>
+            <div class="sk"><span class="sk-ico"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/terraform/terraform-original.svg" alt="" loading="lazy" width="40" height="40" /></span><span class="sk-name">Terraform</span></div>
+            <div class="sk"><span class="sk-ico"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/githubactions/githubactions-original.svg" alt="" loading="lazy" width="40" height="40" /></span><span class="sk-name">GitHub Actions</span></div>
+            <div class="sk"><span class="sk-ico"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/jenkins/jenkins-original.svg" alt="" loading="lazy" width="40" height="40" /></span><span class="sk-name">Jenkins</span></div>
+            <div class="sk"><span class="sk-ico"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/prometheus/prometheus-original.svg" alt="" loading="lazy" width="40" height="40" /></span><span class="sk-name">Prometheus</span></div>
+            <div class="sk"><span class="sk-ico"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/grafana/grafana-original.svg" alt="" loading="lazy" width="40" height="40" /></span><span class="sk-name">Grafana</span></div>
+            <div class="sk"><span class="sk-ico"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/git/git-original.svg" alt="" loading="lazy" width="40" height="40" /></span><span class="sk-name">Git</span></div>
+          </div><div class="sk-grid" role="tabpanel" id="panel-tools" aria-labelledby="tab-tools" hidden>
+            <div class="sk"><span class="sk-ico"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/selenium/selenium-original.svg" alt="" loading="lazy" width="40" height="40" /></span><span class="sk-name">Selenium</span></div>
+            <div class="sk"><span class="sk-ico"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/playwright/playwright-original.svg" alt="" loading="lazy" width="40" height="40" /></span><span class="sk-name">Playwright</span></div>
+            <div class="sk"><span class="sk-ico"><svg viewBox="0 0 24 24" fill="none" stroke="url(#sk-grad)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M13.5 5l-3 14"/></svg></span><span class="sk-name">REST APIs</span></div>
+            <div class="sk"><span class="sk-ico"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/react/react-original.svg" alt="" loading="lazy" width="40" height="40" /></span><span class="sk-name">React</span></div>
+            <div class="sk"><span class="sk-ico"><i class="si" style="--src:url(https://cdn.jsdelivr.net/npm/simple-icons@13/icons/flask.svg);--c:#e8ecf4"></i></span><span class="sk-name">Flask</span></div>
+            <div class="sk"><span class="sk-ico"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/jira/jira-original.svg" alt="" loading="lazy" width="40" height="40" /></span><span class="sk-name">Jira</span></div>
+            <div class="sk"><span class="sk-ico"><svg viewBox="0 0 24 24" fill="none" stroke="url(#sk-grad)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.3-5.6"/><path d="M20 4v5h-5"/><path d="M9 12l2 2 4-4"/></svg></span><span class="sk-name">Agile / Scrum</span></div>
+          </div>
         </div>
       </div>
 
@@ -719,6 +1001,27 @@ nav.scrolled .nav-inner{background:rgba(12,16,25,.72);backdrop-filter:blur(16px)
     });
   },{rootMargin:'-45% 0px -50% 0px'});
   document.querySelectorAll('section[id]').forEach(function(s){io.observe(s)});
+})();
+</script>
+<script>
+/* Skills tabs */
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('.sk-tabs [role=tab]'));
+  function show(t){
+    tabs.forEach(function(b){
+      var on=b===t;
+      b.setAttribute('aria-selected',on);
+      b.tabIndex=on?0:-1;
+      document.getElementById(b.getAttribute('aria-controls')).hidden=!on;
+    });
+  }
+  tabs.forEach(function(b,i){
+    b.addEventListener('click',function(){show(b)});
+    b.addEventListener('keydown',function(e){
+      var d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;
+      if(d){e.preventDefault();var n=tabs[(i+d+tabs.length)%tabs.length];show(n);n.focus();}
+    });
+  });
 })();
 </script>
 </body>
