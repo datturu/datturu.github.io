@@ -1082,9 +1082,14 @@ nav.scrolled .nav-inner{background:rgba(12,16,25,.72);backdrop-filter:blur(16px)
       .then(function(r){return r.json().then(function(d){return {ok:r.ok,d:d}})})
       .then(function(res){
         if(res.ok && String(res.d.success)==='true'){f.reset();st.className='cf-status ok';st.textContent='Thanks! Your message is on its way. I\'ll get back to you soon.';}
-        else throw new Error(res.d && res.d.message);
+        else throw new Error((res.d && res.d.message) || '');
       })
-      .catch(function(){st.className='cf-status bad';st.innerHTML='Something went wrong. Please email me directly at <a href="mailto:devaaicloud@gmail.com" style="color:var(--cyan)">devaaicloud@gmail.com</a>.';})
+      .catch(function(err){
+        var m=(err && err.message)||'';
+        st.className='cf-status bad';
+        st.innerHTML=(/activat/i.test(m)?'This form is waiting to be activated. ':'Something went wrong. ')+'Please email me directly at <a href="mailto:devaaicloud@gmail.com" style="color:var(--cyan)">devaaicloud@gmail.com</a>.';
+        if(m) console.warn('FormSubmit:', m);
+      })
       .finally(function(){btn.disabled=false;});
   });
   f.addEventListener('input',function(e){if(e.target.closest('.cf-field.err'))setErr(e.target,false)});
