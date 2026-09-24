@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Deva Atturu · GenAI & Cloud Engineer</title>
+<meta name="description" content="Deva Atturu is a GenAI and Cloud Engineer building LLM agents, RAG systems, and cloud ML pipelines on AWS and GCP. Published researcher in deep learning." />
+<meta property="og:title" content="Deva Atturu · GenAI & Cloud Engineer" />
+<meta property="og:description" content="LLM agents, RAG systems, and cloud ML pipelines. Published researcher in deep learning." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://devaatturu.com" />
+<meta name="theme-color" content="#07090f" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2322d3ee'/%3E%3Cstop offset='1' stop-color='%23a78bfa'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='%2307090f'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-family='Arial,sans-serif' font-weight='800' font-size='28' fill='url(%23g)'%3EDA%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #07090f;
+    --bg-2: #0c1019;
+    --card: rgba(255, 255, 255, 0.035);
+    --card-hover: rgba(255, 255, 255, 0.06);
+    --border: rgba(255, 255, 255, 0.08);
+    --border-strong: rgba(255, 255, 255, 0.16);
+    --text: #e8ecf4;
+    --muted: #9aa4b8;
+    --dim: #6b7489;
+    --cyan: #22d3ee;
+    --violet: #a78bfa;
+    --grad: linear-gradient(120deg, var(--cyan), var(--violet));
+    --radius: 16px;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+  body {
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  ::selection { background: rgba(34, 211, 238, 0.3); }
+
+  /* Background: grid + glow */
+  .bg {
+    position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background:
+      radial-gradient(600px 400px at 15% 10%, rgba(34, 211, 238, 0.12), transparent 70%),
+      radial-gradient(700px 500px at 85% 30%, rgba(167, 139, 250, 0.10), transparent 70%),
+      var(--bg);
+  }
+  .bg::after {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse at 50% 20%, #000 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at 50% 20%, #000 30%, transparent 75%);
+  }
+
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+  /* Nav */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    transition: background 0.3s, border-color 0.3s;
+    border-bottom: 1px solid transparent;
+  }
+  nav.scrolled {
+    background: rgba(7, 9, 15, 0.75);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-bottom-color: var(--border);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .logo { font-weight: 800; font-size: 18px; letter-spacing: -0.02em; }
+  .logo span { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+  .nav-links a { font-size: 14px; color: var(--muted); transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta {
+    padding: 8px 16px; border-radius: 999px; border: 1px solid var(--border-strong);
+    color: var(--text) !important; font-weight: 500;
+  }
+  .nav-cta:hover { border-color: var(--cyan); }
+  .menu-btn { display: none; background: none; border: 0; color: var(--text); cursor: pointer; padding: 8px; }
+
+  /* Hero */
+  .hero { min-height: 100vh; display: flex; align-items: center; padding: 120px 0 80px; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--mono); font-size: 13px; color: var(--cyan);
+    padding: 6px 14px; border: 1px solid rgba(34, 211, 238, 0.25); border-radius: 999px;
+    background: rgba(34, 211, 238, 0.06); margin-bottom: 28px;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #34d399; box-shadow: 0 0 0 0 rgba(52,211,153,0.6); animation: pulse 2s infinite; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(52,211,153,0.6); } 70% { box-shadow: 0 0 0 10px rgba(52,211,153,0); } 100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); } }
+  h1 {
+    font-size: clamp(44px, 8vw, 88px); font-weight: 800; line-height: 1.02;
+    letter-spacing: -0.045em; margin-bottom: 20px;
+  }
+  .grad { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .role { font-size: clamp(20px, 3vw, 28px); font-weight: 600; color: var(--muted); letter-spacing: -0.02em; margin-bottom: 24px; min-height: 1.4em; }
+  .role .typed { color: var(--text); }
+  .caret { display: inline-block; width: 2px; height: 1em; background: var(--cyan); margin-left: 4px; vertical-align: -0.12em; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .lead { font-size: 18px; color: var(--muted); max-width: 620px; margin-bottom: 36px; }
+  .btns { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 22px; border-radius: 12px; font-weight: 600; font-size: 15px;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s, background 0.2s;
+  }
+  .btn-primary { background: var(--grad); color: #06121a; box-shadow: 0 8px 30px -8px rgba(34, 211, 238, 0.5); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 36px -8px rgba(34, 211, 238, 0.65); }
+  .btn-ghost { border: 1px solid var(--border-strong); background: rgba(255,255,255,0.02); }
+  .btn-ghost:hover { border-color: var(--violet); transform: translateY(-2px); }
+  .btn svg { width: 18px; height: 18px; }
+
+  /* Stats */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 72px; }
+  .stat { padding: 22px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--card); }
+  .stat b { display: block; font-size: 32px; font-weight: 800; letter-spacing: -0.03em; }
+  .stat span { font-size: 14px; color: var(--muted); }
+
+  /* Sections */
+  section { padding: 110px 0; }
+  .label { font-family: var(--mono); font-size: 13px; color: var(--cyan); margin-bottom: 14px; letter-spacing: 0.04em; }
+  h2 { font-size: clamp(32px, 5vw, 48px); font-weight: 800; letter-spacing: -0.035em; line-height: 1.1; margin-bottom: 18px; }
+  .sub { color: var(--muted); font-size: 17px; max-width: 640px; margin-bottom: 56px; }
+
+  .card {
+    border: 1px solid var(--border); border-radius: var(--radius); background: var(--card);
+    transition: border-color 0.3s, background 0.3s, transform 0.3s;
+  }
+  .card:hover { border-color: var(--border-strong); background: var(--card-hover); }
+
+  /* About */
+  .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: start; }
+  .about-text p { color: var(--muted); font-size: 17px; margin-bottom: 18px; }
+  .about-text p strong { color: var(--text); font-weight: 600; }
+  .focus { display: grid; gap: 14px; }
+  .focus .card { padding: 20px 22px; display: flex; gap: 16px; align-items: flex-start; }
+  .icon {
+    flex: none; width: 42px; height: 42px; border-radius: 11px; display: grid; place-items: center;
+    background: rgba(34, 211, 238, 0.08); border: 1px solid rgba(34, 211, 238, 0.2); color: var(--cyan);
+  }
+  .icon.v { background: rgba(167, 139, 250, 0.08); border-color: rgba(167, 139, 250, 0.25); color: var(--violet); }
+  .icon svg { width: 20px; height: 20px; }
+  .focus h3 { font-size: 16px; font-weight: 600; margin-bottom: 2px; }
+  .focus p { font-size: 14px; color: var(--muted); }
+
+  /* Timeline */
+  .timeline { position: relative; padding-left: 36px; }
+  .timeline::before {
+    content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 2px;
+    background: linear-gradient(var(--cyan), var(--violet), transparent);
+  }
+  .job { position: relative; margin-bottom: 22px; }
+  .job::before {
+    content: ""; position: absolute; left: -36px; top: 28px; width: 16px; height: 16px; border-radius: 50%;
+    background: var(--bg); border: 2px solid var(--cyan); box-shadow: 0 0 12px rgba(34, 211, 238, 0.5);
+  }
+  .job:nth-child(even)::before { border-color: var(--violet); box-shadow: 0 0 12px rgba(167, 139, 250, 0.5); }
+  .job .card { padding: 26px 28px; }
+  .job-head { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 4px; }
+  .job h3 { font-size: 19px; font-weight: 700; letter-spacing: -0.01em; }
+  .date { font-family: var(--mono); font-size: 13px; color: var(--dim); white-space: nowrap; padding-top: 3px; }
+  .company { color: var(--cyan); font-weight: 500; font-size: 15px; margin-bottom: 14px; }
+  .company .loc { color: var(--dim); font-weight: 400; }
+  .job ul { list-style: none; display: grid; gap: 8px; }
+  .job li { position: relative; padding-left: 20px; color: var(--muted); font-size: 15px; }
+  .job li::before { content: ""; position: absolute; left: 2px; top: 10px; width: 6px; height: 6px; border-radius: 2px; background: var(--violet); }
+  .job li b { color: var(--text); font-weight: 600; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .tag {
+    font-family: var(--mono); font-size: 12px; color: var(--muted);
+    padding: 4px 10px; border-radius: 6px; background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+  }
+
+  /* Research */
+  .research {
+    position: relative; overflow: hidden; padding: 44px; border-radius: 22px;
+    border: 1px solid rgba(167, 139, 250, 0.25);
+    background: linear-gradient(135deg, rgba(34, 211, 238, 0.07), rgba(167, 139, 250, 0.09));
+  }
+  .research::after {
+    content: ""; position: absolute; width: 380px; height: 380px; right: -120px; top: -140px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(167, 139, 250, 0.25), transparent 70%); pointer-events: none;
+  }
+  .pill {
+    display: inline-block; font-family: var(--mono); font-size: 12px; padding: 5px 12px; border-radius: 999px;
+    background: rgba(167, 139, 250, 0.14); color: var(--violet); border: 1px solid rgba(167, 139, 250, 0.3); margin-bottom: 18px;
+  }
+  .research h3 { font-size: clamp(24px, 3.4vw, 34px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 12px; max-width: 760px; }
+  .journal { color: var(--muted); font-size: 15px; margin-bottom: 8px; }
+  .authors { color: var(--dim); font-size: 14px; margin-bottom: 22px; }
+  .authors b { color: var(--text); }
+  .research p.desc { color: var(--muted); font-size: 16px; max-width: 760px; margin-bottom: 28px; }
+  .pipeline { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 30px; }
+  .step {
+    font-family: var(--mono); font-size: 13px; padding: 10px 14px; border-radius: 10px;
+    background: rgba(7, 9, 15, 0.6); border: 1px solid var(--border-strong);
+  }
+  .step small { display: block; color: var(--dim); font-size: 11px; }
+  .arrow { color: var(--dim); }
+  .r-stats { display: flex; gap: 36px; flex-wrap: wrap; margin-bottom: 30px; }
+  .r-stats b { display: block; font-size: 28px; font-weight: 800; letter-spacing: -0.03em; }
+  .r-stats span { font-size: 13px; color: var(--muted); }
+
+  /* Projects */
+  .projects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .project { padding: 26px; display: flex; flex-direction: column; }
+  .project:hover { transform: translateY(-4px); }
+  .p-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+  .p-top .ext { color: var(--dim); transition: color 0.2s; }
+  .project:hover .ext { color: var(--cyan); }
+  .p-top .ext svg { width: 20px; height: 20px; }
+  .project h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.01em; }
+  .project p { font-size: 14px; color: var(--muted); flex: 1; margin-bottom: 18px; }
+  .private { font-family: var(--mono); font-size: 11px; color: var(--dim); border: 1px solid var(--border); padding: 2px 8px; border-radius: 6px; }
+
+  /* Skills */
+  .skills { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .skill { padding: 26px; }
+  .skill h3 { font-size: 15px; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+  .skill h3 i { width: 8px; height: 8px; border-radius: 2px; background: var(--grad); display: inline-block; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    font-size: 13px; padding: 6px 12px; border-radius: 8px; color: var(--text);
+    background: rgba(255,255,255,0.04); border: 1px solid var(--border); transition: border-color 0.2s, color 0.2s;
+  }
+  .chip:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  /* Education */
+  .edu { padding: 28px; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .edu h3 { font-size: 18px; font-weight: 700; }
+  .edu p { color: var(--muted); font-size: 15px; }
+
+  /* Contact */
+  .contact { text-align: center; padding: 72px 32px; border-radius: 24px; border: 1px solid var(--border); background: var(--card); position: relative; overflow: hidden; }
+  .contact::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(500px 250px at 50% 0%, rgba(34, 211, 238, 0.14), transparent 70%);
+  }
+  .contact h2 { margin-bottom: 14px; }
+  .contact .sub { margin: 0 auto 34px; }
+  .contact .btns { justify-content: center; }
+
+  footer { padding: 40px 0; text-align: center; color: var(--dim); font-size: 13px; }
+
+  /* Reveal on scroll */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .dot, .caret { animation: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .about-grid { grid-template-columns: 1fr; }
+    .projects, .skills { grid-template-columns: 1fr 1fr; }
+    .stats { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 680px) {
+    .wrap { padding: 0 16px; }
+    .menu-btn { display: block; }
+    .nav-links {
+      position: absolute; top: 68px; left: 0; right: 0; flex-direction: column; gap: 0;
+      background: rgba(7, 9, 15, 0.97); border-bottom: 1px solid var(--border);
+      max-height: 0; overflow: hidden; transition: max-height 0.3s;
+    }
+    .nav-links.open { max-height: 400px; }
+    .nav-links a { padding: 14px 16px; width: 100%; border-top: 1px solid var(--border); }
+    .nav-cta { border: 0; border-radius: 0; }
+    section { padding: 80px 0; }
+    .projects, .skills { grid-template-columns: 1fr; }
+    .stat b { font-size: 26px; }
+    .research { padding: 28px 22px; }
+    .job .card { padding: 22px 20px; }
+    .timeline { padding-left: 28px; }
+    .job::before { left: -28px; }
+    .timeline::before { left: 6px; }
+    .contact { padding: 56px 20px; }
+    .pipeline { flex-direction: column; align-items: stretch; gap: 6px; }
+    .arrow { transform: rotate(90deg); align-self: center; line-height: 1; }
+    .r-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .r-stats b { font-size: 22px; }
+    .r-stats span { font-size: 12px; line-height: 1.35; display: block; }
+  }
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"></div>
+
+<nav id="nav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="logo">Deva<span>.</span>Atturu</a>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#research">Research</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact" class="nav-cta">Get in touch</a>
+    </div>
+  </div>
+</nav>
+
+<main id="top">
+  <!-- Hero -->
+  <header class="hero">
+    <div class="wrap">
+      <div class="eyebrow"><span class="dot"></span>Open to GenAI &amp; Cloud roles</div>
+      <h1>Hi, I'm <span class="grad">Deva Atturu</span></h1>
+      <div class="role">I build <span class="typed" id="typed">LLM agents</span><span class="caret"></span></div>
+      <p class="lead">GenAI &amp; Cloud Engineer with 4+ years shipping production AI systems, data pipelines, and cloud infrastructure across financial services and applied research. Published researcher in deep learning.</p>
+      <div class="btns">
+        <a href="#experience" class="btn btn-primary">View my work
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="https://doi.org/10.5334/jcaa.175" target="_blank" rel="noopener" class="btn btn-ghost">Read my paper</a>
+        <a href="https://github.com/datturu" target="_blank" rel="noopener" class="btn btn-ghost">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.7 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6A11.5 11.5 0 0 0 23.5 12C23.5 5.7 18.3.5 12 .5z"/></svg>
+          GitHub
+        </a>
+      </div>
+
+      <div class="stats">
+        <div class="stat reveal"><b class="grad">4+</b><span>years in AI &amp; cloud</span></div>
+        <div class="stat reveal"><b class="grad">1.2M+</b><span>data points parsed daily</span></div>
+        <div class="stat reveal"><b class="grad">95%</b><span>less manual review with LLM agents</span></div>
+        <div class="stat reveal"><b class="grad">94.5%</b><span>accuracy in published research</span></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- About -->
+  <section id="about">
+    <div class="wrap about-grid">
+      <div class="about-text reveal">
+        <div class="label">// about</div>
+        <h2>I turn AI ideas into systems that run in production.</h2>
+        <p>I build <strong>LLM-driven RAG systems</strong> and <strong>multi-agent workflows</strong>, and I run them on <strong>AWS and GCP</strong> with containers, Kubernetes, Terraform, and CI/CD.</p>
+        <p>I also write high-throughput <strong>Python and SQL</strong> data pipelines, and I care about three things: shipping models faster, scaling distributed systems, and keeping cloud costs efficient.</p>
+        <p>Before industry, my research used deep learning to read the <strong>undeciphered Indus Valley script</strong>, work that was published in a peer-reviewed journal in 2025.</p>
+      </div>
+      <div class="focus">
+        <div class="card reveal">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.5 5.5L20 11l-5.5 2.5L12 19l-2.5-5.5L4 11l5.5-2.5z"/></svg></div>
+          <div><h3>GenAI &amp; LLM apps</h3><p>RAG, agentic workflows, structured outputs, prompt engineering</p></div>
+        </div>
+        <div class="card reveal">
+          <div class="icon v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a5 5 0 0 1-.6-9.96A6 6 0 0 1 18 7a4.5 4.5 0 0 1 .5 9H7z"/></svg></div>
+          <div><h3>Cloud &amp; MLOps</h3><p>AWS, GCP, Docker, Kubernetes, Terraform, CI/CD</p></div>
+        </div>
+        <div class="card reveal">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg></div>
+          <div><h3>Data engineering</h3><p>Python, SQL, BigQuery, PostgreSQL at high volume</p></div>
+        </div>
+        <div class="card reveal">
+          <div class="icon v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></div>
+          <div><h3>Computer vision</h3><p>YOLO, MobileNet, OpenCV, GAN-based augmentation</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section id="experience">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="label">// experience</div>
+        <h2>Where I've worked</h2>
+        <p class="sub">From SDN networking to fraud models to LLM agents, across industry and research.</p>
+      </div>
+
+      <div class="timeline">
+        <div class="job reveal">
+          <div class="card">
+            <div class="job-head"><h3>AI Specialist</h3><span class="date">Nov 2025 – Present</span></div>
+            <div class="company">Alliance Data Solutions <span class="loc">· Green Cove Springs, FL</span></div>
+            <ul>
+              <li>Architected agentic GenAI workflows with Claude that drive multi-threaded Python web automation and REST API integrations, increasing data collection speed by <b>40%</b> and parsing <b>1.2M+</b> data points daily.</li>
+              <li>Engineered schema-validated outputs for production LLM agents, cutting manual data review by <b>95%</b> and reducing pipeline ingestion errors to near zero.</li>
+            </ul>
+            <div class="tags"><span class="tag">Claude</span><span class="tag">Python</span><span class="tag">Structured outputs</span><span class="tag">Web automation</span><span class="tag">REST APIs</span></div>
+          </div>
+        </div>
+
+        <div class="job reveal">
+          <div class="card">
+            <div class="job-head"><h3>Software Engineer</h3><span class="date">Apr 2025 – Nov 2025</span></div>
+            <div class="company">Kurras LLC, contracted to PNC Bank <span class="loc">· Melbourne, FL</span></div>
+            <ul>
+              <li>Developed cloud-based AI/ML pipelines with TensorFlow and PyTorch on AWS and GCP for real-time fraud models, improving fraud detection accuracy by <b>14%</b>.</li>
+              <li>Deployed containerized microservices with automated CI/CD, and optimized SQL/Python workflows in BigQuery and PostgreSQL to cut query latency by <b>35%</b> for batch risk models.</li>
+            </ul>
+            <div class="tags"><span class="tag">TensorFlow</span><span class="tag">PyTorch</span><span class="tag">Docker</span><span class="tag">Kubernetes</span><span class="tag">BigQuery</span><span class="tag">PostgreSQL</span></div>
+          </div>
+        </div>
+
+        <div class="job reveal">
+          <div class="card">
+            <div class="job-head"><h3>Software Engineer Intern</h3><span class="date">Aug 2024 – Apr 2025</span></div>
+            <div class="company">TekSharks Inc <span class="loc">· Melbourne, FL</span></div>
+            <ul>
+              <li>Implemented secure, scalable ML operations on AWS (S3, Lambda, IAM, EC2) and GCP (Cloud Storage, Pub/Sub), reducing infrastructure provisioning time by <b>25%</b>.</li>
+              <li>Automated multi-cloud monitoring and security policy hardening with DevOps, reducing security compliance flags by <b>30%</b>.</li>
+            </ul>
+            <div class="tags"><span class="tag">AWS</span><span class="tag">GCP</span><span class="tag">IAM</span><span class="tag">Lambda</span><span class="tag">Pub/Sub</span></div>
+          </div>
+        </div>
+
+        <div class="job reveal">
+          <div class="card">
+            <div class="job-head"><h3>Research Assistant</h3><span class="date">Mar 2023 – May 2024</span></div>
+            <div class="company">Florida Institute of Technology <span class="loc">· Melbourne, FL</span></div>
+            <ul>
+              <li>Built a cloud-native computer vision pipeline for archaeological imagery, combining GAN-based synthetic augmentation with YOLOv3 and MobileNet to improve detection precision by <b>18%</b>.</li>
+              <li>Shipped a React + Flask research portal with feedback-driven retraining on Docker, Cloud Run, and Cloud Build, cutting model update cycles by <b>50%</b>.</li>
+            </ul>
+            <div class="tags"><span class="tag">YOLOv3</span><span class="tag">MobileNet</span><span class="tag">GANs</span><span class="tag">React</span><span class="tag">Flask</span><span class="tag">Cloud Run</span></div>
+          </div>
+        </div>
+
+        <div class="job reveal">
+          <div class="card">
+            <div class="job-head"><h3>Developer</h3><span class="date">Jul 2021 – Dec 2022</span></div>
+            <div class="company">Wipro <span class="loc">· India</span></div>
+            <ul>
+              <li>Developed multi-cloud networking features on Juniper Contrail SDN and resolved peak-time performance regressions, reducing network configuration latency by <b>25%</b>.</li>
+              <li>Tuned Kubernetes orchestration and container parameters, improving resource utilization by <b>15%</b>.</li>
+            </ul>
+            <div class="tags"><span class="tag">SDN</span><span class="tag">Juniper Contrail</span><span class="tag">Kubernetes</span><span class="tag">Networking</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Research -->
+  <section id="research">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="label">// research</div>
+        <h2>Published research</h2>
+        <p class="sub">Peer-reviewed work applying deep learning to one of history's great unsolved puzzles.</p>
+      </div>
+      <div class="research reveal">
+        <span class="pill">Peer reviewed · 2025</span>
+        <h3>Deep Learning in Archiving Indus Script and Motif Information</h3>
+        <div class="journal"><em>Journal of Computer Applications in Archaeology</em>, Vol. 8, Issue 1, pp. 156–169</div>
+        <div class="authors">V. Dixit, N. Hussain, S. Basak, <b>D. Atturu</b>, D. Mitra, U. Bhattacharya</div>
+        <p class="desc">An end-to-end system that reads the undeciphered Indus Valley script from 4,000-year-old seals, identifies each seal's motif, and archives everything in a searchable database. I ran the initial experiments and built the database and the end-to-end workflow.</p>
+        <div class="pipeline">
+          <div class="step">Seal image<small>input</small></div><span class="arrow">→</span>
+          <div class="step">YOLOv3<small>find each sign</small></div><span class="arrow">→</span>
+          <div class="step">MobileNet<small>identify the sign</small></div><span class="arrow">→</span>
+          <div class="step">CNN<small>identify the motif</small></div><span class="arrow">→</span>
+          <div class="step">MySQL<small>archive &amp; query</small></div>
+        </div>
+        <div class="r-stats">
+          <div><b class="grad">94.5%</b><span>sign recognition accuracy</span></div>
+          <div><b class="grad">15</b><span>model architectures compared</span></div>
+          <div><b class="grad">963</b><span>annotated seal images</span></div>
+        </div>
+        <div class="btns">
+          <a href="https://journal.caa-international.org/articles/10.5334/jcaa.175" target="_blank" rel="noopener" class="btn btn-primary">Read the paper</a>
+          <a href="https://repository.fit.edu/etd/1416" target="_blank" rel="noopener" class="btn btn-ghost">Master's thesis</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="label">// projects</div>
+        <h2>Things I've built</h2>
+        <p class="sub">Personal and academic projects. Most of my professional work is proprietary, so it isn't shown here.</p>
+      </div>
+      <div class="projects">
+        <div class="card project reveal">
+          <div class="p-top">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg></div>
+            <span class="private">private</span>
+          </div>
+          <h3>Android LLM Agent</h3>
+          <p>An AI agent that controls an Android phone from plain-English goals, with an evaluation framework that compares prompting strategies.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">OpenAI API</span><span class="tag">Pydantic</span></div>
+        </div>
+
+        <a class="card project reveal" href="https://github.com/datturu/sars-cov2-sequence-clustering" target="_blank" rel="noopener">
+          <div class="p-top">
+            <div class="icon v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3c0 6 10 6 10 12s-10 6-10 6M17 3c0 6-10 6-10 12M8 7h8M8 17h8"/></svg></div>
+            <span class="ext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
+          </div>
+          <h3>SARS-CoV-2 Sequence Clustering</h3>
+          <p>Groups virus DNA sequences with DBSCAN and Levenshtein distance to find related strains and outliers.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">scikit-learn</span><span class="tag">DBSCAN</span></div>
+        </a>
+
+        <a class="card project reveal" href="https://github.com/datturu/face-recognition-attendance" target="_blank" rel="noopener">
+          <div class="p-top">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="10" r="3"/><path d="M7 18c1-2.5 3-3.5 5-3.5s4 1 5 3.5"/></svg></div>
+            <span class="ext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
+          </div>
+          <h3>Face Recognition Attendance</h3>
+          <p>Automatic classroom attendance on a Raspberry Pi that recognizes faces in real time and emails the report.</p>
+          <div class="tags"><span class="tag">OpenCV</span><span class="tag">Raspberry Pi</span><span class="tag">IoT</span></div>
+        </a>
+
+        <a class="card project reveal" href="https://github.com/datturu/sdn-dns-cache" target="_blank" rel="noopener">
+          <div class="p-top">
+            <div class="icon v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="16" y="16" width="6" height="6" rx="1"/><path d="M12 8v4M5 16v-2h14v2"/></svg></div>
+            <span class="ext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
+          </div>
+          <h3>SDN DNS Cache</h3>
+          <p>Speeds up DNS lookups in a software-defined network by caching responses inside the Ryu controller.</p>
+          <div class="tags"><span class="tag">Ryu</span><span class="tag">Mininet</span><span class="tag">BIND9</span></div>
+        </a>
+
+        <a class="card project reveal" href="https://github.com/datturu/python-ray-tracer" target="_blank" rel="noopener">
+          <div class="p-top">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg></div>
+            <span class="ext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
+          </div>
+          <h3>Python Ray Tracer</h3>
+          <p>A ray tracer built from scratch with NumPy that renders spheres on a plane with shading.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">NumPy</span><span class="tag">Graphics</span></div>
+        </a>
+
+        <a class="card project reveal" href="https://doi.org/10.5334/jcaa.175" target="_blank" rel="noopener">
+          <div class="p-top">
+            <div class="icon v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h12l4 4v12H4z"/><path d="M8 12h8M8 16h5M8 8h4"/></svg></div>
+            <span class="ext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
+          </div>
+          <h3>Indus Script Digitization</h3>
+          <p>Deep-learning pipeline that reads Indus Valley script and motifs from seal images. Published in 2025.</p>
+          <div class="tags"><span class="tag">YOLOv3</span><span class="tag">MobileNet</span><span class="tag">MySQL</span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="label">// skills</div>
+        <h2>Tech stack</h2>
+        <p class="sub">The tools I use to design, build, and ship.</p>
+      </div>
+      <div class="skills">
+        <div class="card skill reveal">
+          <h3><i></i>GenAI &amp; LLMs</h3>
+          <div class="chips"><span class="chip">RAG</span><span class="chip">Hybrid search</span><span class="chip">Agentic workflows</span><span class="chip">Structured outputs</span><span class="chip">Prompt engineering</span><span class="chip">LangChain</span><span class="chip">LlamaIndex</span><span class="chip">FAISS</span><span class="chip">Pinecone</span><span class="chip">Claude</span><span class="chip">GPT-4</span></div>
+        </div>
+        <div class="card skill reveal">
+          <h3><i></i>Machine Learning &amp; Data</h3>
+          <div class="chips"><span class="chip">Python</span><span class="chip">SQL</span><span class="chip">TensorFlow</span><span class="chip">PyTorch</span><span class="chip">scikit-learn</span><span class="chip">Pandas</span><span class="chip">NumPy</span><span class="chip">PostgreSQL</span><span class="chip">BigQuery</span><span class="chip">OpenCV</span></div>
+        </div>
+        <div class="card skill reveal">
+          <h3><i></i>AWS</h3>
+          <div class="chips"><span class="chip">EKS</span><span class="chip">Lambda</span><span class="chip">SageMaker</span><span class="chip">Bedrock</span><span class="chip">S3</span><span class="chip">EC2</span><span class="chip">IAM</span><span class="chip">CloudWatch</span></div>
+        </div>
+        <div class="card skill reveal">
+          <h3><i></i>Google Cloud</h3>
+          <div class="chips"><span class="chip">Cloud Run</span><span class="chip">BigQuery</span><span class="chip">Pub/Sub</span><span class="chip">Cloud Storage</span><span class="chip">Cloud Build</span></div>
+        </div>
+        <div class="card skill reveal">
+          <h3><i></i>DevOps</h3>
+          <div class="chips"><span class="chip">Docker</span><span class="chip">Kubernetes</span><span class="chip">Terraform</span><span class="chip">GitHub Actions</span><span class="chip">Jenkins</span><span class="chip">Prometheus</span><span class="chip">Grafana</span></div>
+        </div>
+        <div class="card skill reveal">
+          <h3><i></i>Automation &amp; Collaboration</h3>
+          <div class="chips"><span class="chip">Selenium</span><span class="chip">Playwright</span><span class="chip">REST APIs</span><span class="chip">React</span><span class="chip">Flask</span><span class="chip">Git</span><span class="chip">Jira</span><span class="chip">Agile / Scrum</span></div>
+        </div>
+      </div>
+
+      <div class="card edu reveal" style="margin-top: 18px;">
+        <div>
+          <div class="label" style="margin-bottom: 6px;">// education</div>
+          <h3>Master's degree · Florida Institute of Technology</h3>
+          <p>Thesis: <em>Deep Learning in Indus Valley Script Digitization</em> (2024)</p>
+        </div>
+        <a href="https://repository.fit.edu/etd/1416" target="_blank" rel="noopener" class="btn btn-ghost">Read the thesis</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="contact reveal">
+        <div class="label">// contact</div>
+        <h2>Let's build something <span class="grad">intelligent</span>.</h2>
+        <p class="sub">I'm open to GenAI, ML, and cloud engineering roles and collaborations. The best way to reach me is below.</p>
+        <div class="btns">
+          <a href="https://github.com/datturu" target="_blank" rel="noopener" class="btn btn-primary">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.7 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6A11.5 11.5 0 0 0 23.5 12C23.5 5.7 18.3.5 12 .5z"/></svg>
+            GitHub
+          </a>
+          <a href="https://doi.org/10.5334/jcaa.175" target="_blank" rel="noopener" class="btn btn-ghost">Publication</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="year">2026</span> Deva Atturu · devaatturu.com</div>
+</footer>
+
+<script>
+  // Nav background on scroll
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 20);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Mobile menu
+  const menuBtn = document.getElementById('menuBtn');
+  const navLinks = document.getElementById('navLinks');
+  menuBtn.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', open);
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    menuBtn.setAttribute('aria-expanded', false);
+  }));
+
+  // Typing effect
+  const words = ['LLM agents', 'RAG systems', 'cloud ML pipelines', 'data pipelines at scale', 'computer vision models'];
+  const typed = document.getElementById('typed');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce) {
+    let w = 0, i = words[0].length, deleting = true;
+    const tick = () => {
+      const word = words[w];
+      if (deleting) {
+        i--;
+        if (i === 0) { deleting = false; w = (w + 1) % words.length; }
+      } else {
+        i++;
+        if (i === words[w].length) { deleting = true; typed.textContent = words[w]; return setTimeout(tick, 1800); }
+      }
+      typed.textContent = words[w].slice(0, i);
+      setTimeout(tick, deleting ? 45 : 85);
+    };
+    setTimeout(tick, 1800);
+  }
+
+  // Reveal on scroll
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
